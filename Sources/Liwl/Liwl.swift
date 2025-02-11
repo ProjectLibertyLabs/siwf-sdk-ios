@@ -27,7 +27,6 @@ public struct LiwlButton: View {
     
     // MARK: - VIEW BODY
     
-    @available(iOS 15.0, *)
     public var body: some View {
         switch style {
         case .normal:
@@ -48,11 +47,7 @@ public struct LiwlButton: View {
 
 // MARK: - FILE PRIVATE
 
-@available(iOS 15.0, *)
-@available(macOS 10.15, *)
 fileprivate extension LiwlButton {
-    @available(iOS 16.0, *)
-    @available(macOS 10.15, *)
     func styledButton(backgroundColor: Color, textColor: Color, borderColor: Color, logo: String) -> some View {
         return Button(action: {Task { await handleAction() }}) {
             HStack(spacing: 10) {
@@ -78,7 +73,16 @@ fileprivate extension LiwlButton {
         }
         .sheet(isPresented: $showSafariView) {
             if let url = self.redirectUrl {
-                SafariView(url: url)
+                #if os(iOS)
+                    SafariView(url: url)
+                #elseif os(macOS)
+                    VStack {
+                        Text("Opening browser...")
+                            .onAppear {
+                                NSWorkspace.shared.open(url)
+                            }
+                    }
+                #endif
             } else {
                 Text("Invalid URL")
             }
