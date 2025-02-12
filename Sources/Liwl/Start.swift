@@ -1,16 +1,11 @@
 //
-//  File.swift
-//  
+//  Start.swift
+//
 //
 //  Created by Claire Olmstead on 2/10/25.
 //
 
 import Foundation
-
-enum SiwfEndpoint: String {
-    case production = "https://production.example.com/start"
-    case staging = "https://staging.example.com/start"
-}
 
 struct SiwfOptions {
     var endpoint: String
@@ -58,12 +53,15 @@ func generateAuthenticationUrl(
     
     var queryItems = additionalCallbackUrlParams.map { URLQueryItem(name: $0.key, value: $0.value) }
     
-    // Ensure the signed request is set last so it cannot be overridden
+    // Remove existing "signedRequest" if it exists
+    queryItems.removeAll { $0.name == "signedRequest" }
+
+    // Ensure the "signedRequest" is set last so it cannot be overridden
     queryItems.append(URLQueryItem(name: "signedRequest", value: encodedSignedRequest))
     
     // Remove reserved keywords if present
-    queryItems = queryItems.filter { $0.name != "authorizationCode" }
-    
+    queryItems.removeAll { $0.name == "authorizationCode" }
+
     urlComponents.queryItems = queryItems
     
     return urlComponents.url?.absoluteString

@@ -7,22 +7,23 @@ public struct LiwlButton: View {
     
     // MARK: - PROPERTIES
     @State private var showSafariView = false
-    @State private var redirectUrl: URL?
+    @State private var signedRequest: SiwfSignedRequest
 
     // logo, colors, text all pulled in dynamically (user only chooses light/dark/normal)
 //    private let logo: UIImageAsset
     private let style: LiwlButtonStyle
     private let titleKey: String
+    private let authUrl: URL
 
     // MARK: - INITIALIZER
     
     /// - Parameters:
     ///   - style: The style of the button (affects text and background colors).
     ///   - url: The website URL to open on click.
-    public init(style: LiwlButtonStyle = .normal, redirectUrl: String = "", titleKey: String = "Sign in with Frequency") {
+    public init(style: LiwlButtonStyle = .normal, signedRequest: SiwfSignedRequest, titleKey: String = "Sign in with Frequency") {
         self.style = style
         self.titleKey = titleKey
-        self.redirectUrl = URL(string: redirectUrl)
+        self.authUrl = URL(string: generateAuthenticationUrl(signedRequest: signedRequest, additionalCallbackUrlParams: [:], options: nil)!)!
     }
     
     // MARK: - VIEW BODY
@@ -72,7 +73,7 @@ fileprivate extension LiwlButton {
             .cornerRadius(24)
         }
         .sheet(isPresented: $showSafariView) {
-            if let url = self.redirectUrl {
+            if let url = self.authUrl {
                 #if os(iOS)
                     SafariView(url: url)
                 #elseif os(macOS)
@@ -107,8 +108,8 @@ fileprivate extension LiwlButton {
     }
     
     func setRedirectUrl() async {
-        print("START: \(redirectUrl as Any)")
-        if (redirectUrl == nil) {
+        print("START: \(authUrl as Any)")
+        if (authUrl == nil) {
             let urlString = "http://localhost:3013/v2/accounts/siwf?credentials=VerifiedGraphKeyCredential&credentials=VerifiedEmailAddressCredential&credentials=VerifiedPhoneNumberCredential&permissions=dsnp.broadcast%40v2&permissions=dsnp.private-follows%40v1&permissions=dsnp.reply%40v2&permissions=dsnp.reaction%40v1&permissions=dsnp.tombstone%40v2&permissions=dsnp.update%40v2&permissions=frequency.default-token-address%40v1&callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%2Fcallback"
             
             do {

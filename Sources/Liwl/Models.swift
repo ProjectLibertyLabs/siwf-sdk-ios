@@ -1,13 +1,13 @@
 //
-//  File.swift
-//  
+//  Models.swift
+//
 //
 //  Created by Claire Olmstead on 2/10/25.
 //
 
 import Foundation
 
-struct SiwfPublicKey: Codable {
+public struct SiwfPublicKey: Codable, Equatable {
     let encodedValue: String
     let encoding: String
     let format: String
@@ -21,7 +21,7 @@ struct SiwfPublicKey: Codable {
     }
 }
 
-struct SiwfSignature: Codable {
+public struct SiwfSignature: Codable, Equatable {
     let algo: String
     let encoding: String
     let encodedValue: String
@@ -33,7 +33,7 @@ struct SiwfSignature: Codable {
     }
 }
 
-struct SiwfPayload: Codable {
+public struct SiwfPayload: Codable, Equatable {
     let callback: String
     let permissions: [Int]
     let userIdentifierAdminUrl: String?
@@ -45,25 +45,25 @@ struct SiwfPayload: Codable {
     }
 }
 
-struct SiwfRequestedSignature: Codable {
+public struct SiwfRequestedSignature: Codable, Equatable {
     let publicKey: SiwfPublicKey
     let signature: SiwfSignature
     let payload: SiwfPayload
 }
 
-struct AnyOfRequired: Codable {
+public struct AnyOfRequired: Codable, Equatable {
     let field: String // Example placeholder, update as necessary
 }
 
-struct SiwfCredential: Codable {
+public struct SiwfCredential: Codable, Equatable {
     let credentialId: String // Example placeholder, update as necessary
 }
 
-enum SiwfCredentialRequest: Codable {
+public enum SiwfCredentialRequest: Codable, Equatable {
     case anyOfRequired(AnyOfRequired)
     case siwfCredential(SiwfCredential)
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let anyOfRequired = try? container.decode(AnyOfRequired.self) {
             self = .anyOfRequired(anyOfRequired)
@@ -74,7 +74,7 @@ enum SiwfCredentialRequest: Codable {
         }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .anyOfRequired(let anyOfRequired):
@@ -85,12 +85,18 @@ enum SiwfCredentialRequest: Codable {
     }
 }
 
-struct SiwfSignedRequest: Codable {
+public struct SiwfSignedRequest: Codable, Equatable {
     let requestedSignatures: SiwfRequestedSignature
     let requestedCredentials: [SiwfCredentialRequest]?
 
     init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfCredentialRequest]? = nil) {
         self.requestedSignatures = requestedSignatures
         self.requestedCredentials = requestedCredentials
+    }
+
+    // Custom Equatable conformance
+    public static func == (lhs: SiwfSignedRequest, rhs: SiwfSignedRequest) -> Bool {
+        return lhs.requestedSignatures == rhs.requestedSignatures &&
+               lhs.requestedCredentials == rhs.requestedCredentials
     }
 }
