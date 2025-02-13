@@ -7,6 +7,16 @@
 
 import Foundation
 
+public struct User: Codable, Equatable {
+    public let id: String
+    public let name: String
+
+    public init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+}
+
 public struct SiwfPublicKey: Codable, Equatable {
     let encodedValue: String
     let encoding: String
@@ -99,4 +109,16 @@ public struct SiwfSignedRequest: Codable, Equatable {
         return lhs.requestedSignatures == rhs.requestedSignatures &&
                lhs.requestedCredentials == rhs.requestedCredentials
     }
+}
+
+public enum LiwlButtonStyle {
+    case normal
+    case dark
+    case light
+}
+
+public struct LiwlResponse: Codable {
+    let signedRequest: String
+    let redirectUrl: String
+    let frequencyRpcUrl: String
 }
