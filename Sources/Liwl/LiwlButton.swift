@@ -6,21 +6,29 @@ import Foundation
 public struct LiwlButton: View {
     var style: LiwlButtonStyle
     var title: String
-    var handleAction: () -> Void
-    
-    @Binding var url: URL?
-    @Binding var showSafariView: Bool
+    var handleAction: () -> URL?
 
-    public init(style: LiwlButtonStyle = .normal, title: String = "Log In With Liberty", handleAction: @escaping () -> Void, url: Binding<URL?>, showSafariView: Binding<Bool>) {
+    @State public var url: URL?
+    @State public var showSafariView: Bool = false
+    
+    public init(
+        style: LiwlButtonStyle = .normal,
+        title: String = "Log In With Liberty",
+        handleAction: @escaping () -> URL?
+    ) {
         self.style = style
         self.title = title
         self.handleAction = handleAction
-        self._url = url
-        self._showSafariView = showSafariView
     }
-    
+        
     func styledButton(backgroundColor: Color, textColor: Color, borderColor: Color, logo: String) -> some View {
-        Button(action: { Task { await handleAction() } }) {
+        Button(action: {
+            print("BUTTON CLICKED IN ACTION")
+            Task { self.url = await handleAction() }
+            print("Current showSafariView value before toggle: \(showSafariView)")
+            self.showSafariView = true
+            print("Current showSafariView value AFTER toggle: \(showSafariView)")
+        }) {
             HStack(spacing: 10) {
                 Image(logo)
                     .renderingMode(.original)
@@ -56,7 +64,17 @@ public struct LiwlButton: View {
     public var body: some View {
         switch style {
         case .normal:
-            styledButton(backgroundColor: Color("frequencyTeal"), textColor: .black, borderColor: Color("frequencyTeal"), logo: "frequencyLogo")
+            styledButton(backgroundColor: Color("frequencyTeal"), textColor: .black, borderColor: Color("frequencyTeal"), logo: "frequencyLogo").sheet(isPresented: $showSafariView) {
+                if let authUrl = url {
+                    SafariView(url: authUrl)
+
+                    #if os(iOS)
+                        SafariView(url: authUrl)
+                    #elseif os(macOS)
+                        NSWorkspace.shared.open(authUrl)
+                    #endif
+                }
+            }
         case .dark:
             styledButton(backgroundColor: .black, textColor: .white, borderColor: .black, logo: "frequencyLogoLight")
         case .light:
