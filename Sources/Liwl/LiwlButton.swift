@@ -23,11 +23,8 @@ public struct LiwlButton: View {
         
     func styledButton(backgroundColor: Color, textColor: Color, borderColor: Color, logo: String) -> some View {
         Button(action: {
-            print("BUTTON CLICKED IN ACTION")
             Task { self.url = await handleAction() }
-            print("Current showSafariView value before toggle: \(showSafariView)")
             self.showSafariView = true
-            print("Current showSafariView value AFTER toggle: \(showSafariView)")
         }) {
             HStack(spacing: 10) {
                 Image(logo)

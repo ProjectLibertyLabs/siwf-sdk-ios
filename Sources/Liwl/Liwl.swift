@@ -23,15 +23,11 @@ public class Liwl: ObservableObject {
     }
     
     public static func onSignInComplete(_ callback: @escaping (Result<User, Error>) -> Void) {
+        print("ONSIGNINCOMPLETE")
         LiwlAuthManager.shared.signInCompletion = callback
     }
     
     public static func handleCallback(url: URL) -> Bool {
         return LiwlAuthManager.shared.handleSignInCallback(url: url)
-    }
-    
-    @objc private static func signInTapped() {
-        print("Sign-In Button!")
-        LiwlAuthManager.shared.startSignInProcess()
     }
 }
