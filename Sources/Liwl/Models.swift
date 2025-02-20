@@ -7,23 +7,13 @@
 
 import Foundation
 
-public struct User: Codable, Equatable {
-    public let id: String
-    public let name: String
-
-    public init(id: String, name: String) {
-        self.id = id
-        self.name = name
-    }
-}
-
 public struct SiwfPublicKey: Codable, Equatable {
     let encodedValue: String
     let encoding: String
     let format: String
     let type: String
 
-    init(encodedValue: String) {
+    public init(encodedValue: String) {
         self.encodedValue = encodedValue
         self.encoding = "base58"
         self.format = "ss58"
@@ -36,7 +26,7 @@ public struct SiwfSignature: Codable, Equatable {
     let encoding: String
     let encodedValue: String
 
-    init(encodedValue: String) {
+    public init(encodedValue: String) {
         self.algo = "SR25519"
         self.encoding = "base16"
         self.encodedValue = encodedValue
@@ -48,7 +38,7 @@ public struct SiwfPayload: Codable, Equatable {
     let permissions: [Int]
     let userIdentifierAdminUrl: String?
 
-    init(callback: String, permissions: [Int], userIdentifierAdminUrl: String? = nil) {
+    public init(callback: String, permissions: [Int], userIdentifierAdminUrl: String? = nil) {
         self.callback = callback
         self.permissions = permissions
         self.userIdentifierAdminUrl = userIdentifierAdminUrl
@@ -59,6 +49,12 @@ public struct SiwfRequestedSignature: Codable, Equatable {
     let publicKey: SiwfPublicKey
     let signature: SiwfSignature
     let payload: SiwfPayload
+    
+    public init(publicKey: SiwfPublicKey, signature: SiwfSignature, payload: SiwfPayload) {
+        self.publicKey = publicKey
+        self.signature = signature
+        self.payload = payload
+    }
 }
 
 public struct AnyOfRequired: Codable, Equatable {
@@ -96,10 +92,10 @@ public enum SiwfCredentialRequest: Codable, Equatable {
 }
 
 public struct SiwfSignedRequest: Codable, Equatable {
-    let requestedSignatures: SiwfRequestedSignature
-    let requestedCredentials: [SiwfCredentialRequest]?
+    public let requestedSignatures: SiwfRequestedSignature
+    public let requestedCredentials: [SiwfCredentialRequest]?
 
-    init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfCredentialRequest]? = nil) {
+    public init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfCredentialRequest]? = nil) {
         self.requestedSignatures = requestedSignatures
         self.requestedCredentials = requestedCredentials
     }
@@ -111,7 +107,12 @@ public struct SiwfSignedRequest: Codable, Equatable {
     }
 }
 
-public enum LiwlButtonStyle {
+public struct SiwfOptions {
+    var endpoint: String
+    var loginMsgUri: String?
+}
+
+public enum LiwlButtonMode {
     case normal
     case dark
     case light
@@ -121,4 +122,17 @@ public struct LiwlResponse: Codable {
     let signedRequest: String
     let redirectUrl: String
     let frequencyRpcUrl: String
+}
+
+
+public struct GenerateAuthData {
+    let signedRequest: SiwfSignedRequest
+    let additionalCallbackUrlParams: [String: String]
+    let options: SiwfOptions?
+    
+    public init(signedRequest: SiwfSignedRequest, additionalCallbackUrlParams: [String: String], options: SiwfOptions?) {
+        self.signedRequest = signedRequest
+        self.additionalCallbackUrlParams = additionalCallbackUrlParams
+        self.options = options
+    }
 }

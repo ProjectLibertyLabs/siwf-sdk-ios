@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct SiwfOptions {
-    var endpoint: String
-    var loginMsgUri: String?
-}
-
 func encodeSignedRequest(_ request: SiwfSignedRequest) -> String? {
     do {
         let jsonData = try JSONEncoder().encode(request)
@@ -39,11 +34,9 @@ func parseEndpoint(input: String, path: EndpointPath) -> String {
     }
 }
 
-func generateAuthenticationUrl(
-    signedRequest: SiwfSignedRequest,
-    additionalCallbackUrlParams: [String: String],
-    options: SiwfOptions?
-) -> String? {
+func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
+    let (signedRequest, options, additionalCallbackUrlParams) = (authData.signedRequest, authData.options, authData.additionalCallbackUrlParams)
+    
     let encodedSignedRequest = encodeSignedRequest(signedRequest)
     let endpoint = parseEndpoint(input: options?.endpoint ?? "mainnet", path: EndpointPath.start)
     
@@ -64,5 +57,5 @@ func generateAuthenticationUrl(
 
     urlComponents.queryItems = queryItems
     
-    return urlComponents.url?.absoluteString
+    return urlComponents.url
 }
