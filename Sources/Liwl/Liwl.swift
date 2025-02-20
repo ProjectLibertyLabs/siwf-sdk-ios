@@ -9,25 +9,14 @@ import SwiftUI
 import SafariServices
 
 public class Liwl: ObservableObject {
-    @Published public var url: URL? = nil
-    @Published public var showSafariView: Bool = false
-    
-    public static let shared = Liwl()
-    
-    public static func createSignInButton(handleAction: @escaping () -> URL?) -> LiwlButton {
+    public static func createSignInButton(handleAction: @escaping () -> Void, mode: LiwlButtonMode, authData: GenerateAuthData) -> LiwlButton {
+        let authUrl = generateAuthenticationUrl(authData: authData)
+        
         return LiwlButton(
-            style: .normal,
-            title: "Log In With Liberty",
+            mode: .normal,
+            title: "Sign In With Frequency",
+            authUrl: authUrl,
             handleAction: handleAction
         )
-    }
-    
-    public static func onSignInComplete(_ callback: @escaping (Result<User, Error>) -> Void) {
-        print("ONSIGNINCOMPLETE")
-        LiwlAuthManager.shared.signInCompletion = callback
-    }
-    
-    public static func handleCallback(url: URL) -> Bool {
-        return LiwlAuthManager.shared.handleSignInCallback(url: url)
     }
 }
