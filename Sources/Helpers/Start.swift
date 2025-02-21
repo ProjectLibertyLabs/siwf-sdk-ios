@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Models
 
 func encodeSignedRequest(_ request: SiwfSignedRequest) -> String? {
     do {
@@ -34,7 +35,7 @@ func parseEndpoint(input: String, path: EndpointPath) -> String {
     }
 }
 
-func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
+public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
     let (signedRequest, options, additionalCallbackUrlParams) = (authData.signedRequest, authData.options, authData.additionalCallbackUrlParams)
     
     let encodedSignedRequest = encodeSignedRequest(signedRequest)

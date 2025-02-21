@@ -1,5 +1,5 @@
 //
-//  Models.swift
+//  SiwfModels.swift
 //
 //
 //  Created by Claire Olmstead on 2/10/25.
@@ -108,31 +108,6 @@ public struct SiwfSignedRequest: Codable, Equatable {
 }
 
 public struct SiwfOptions {
-    var endpoint: String
-    var loginMsgUri: String?
-}
-
-public enum LiwlButtonMode {
-    case normal
-    case dark
-    case light
-}
-
-public struct LiwlResponse: Codable {
-    let signedRequest: String
-    let redirectUrl: String
-    let frequencyRpcUrl: String
-}
-
-
-public struct GenerateAuthData {
-    let signedRequest: SiwfSignedRequest
-    let additionalCallbackUrlParams: [String: String]
-    let options: SiwfOptions?
-    
-    public init(signedRequest: SiwfSignedRequest, additionalCallbackUrlParams: [String: String], options: SiwfOptions?) {
-        self.signedRequest = signedRequest
-        self.additionalCallbackUrlParams = additionalCallbackUrlParams
-        self.options = options
-    }
+    public var endpoint: String
+    public var loginMsgUri: String?
 }
