@@ -1,40 +1,108 @@
 import SwiftUI
 import Foundation
+import Models
+import Helpers
 
 @available(macOS 10.15, *)
 @available(iOS 15.0, *)
 public struct LiwlButton: View {
     var mode: LiwlButtonMode
-    var title: String
-    var handleAction: () -> Void
     var authUrl: URL?
+    var handleAction: () -> Void
     
+    @State private var title: String = ""
+    @State private var backgroundColor: Color = Color(.systemGray)
+    @State private var textColor: Color = Color(.white)
+    @State private var borderColor: Color = Color(.systemGray)
+    @State private var logoImage: UIImage? = nil
     @State public var showSafariView: Bool = false
     
     public init(
-        mode: LiwlButtonMode = .normal,
-        title: String = "Sign In With Frequency",
+        mode: LiwlButtonMode = .primary,
         authUrl: URL?,
         handleAction: @escaping () -> Void
     ) {
         self.mode = mode
-        self.title = title
         self.authUrl = authUrl
         self.handleAction = handleAction
     }
+    
+    private func fetchAssets() {
+        let urlString = "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json"
         
-    func styledButton(backgroundColor: Color, textColor: Color, borderColor: Color, logo: String) -> some View {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching assets: \(error)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let assets = try decoder.decode(Assets.self, from: data)
+            
+                DispatchQueue.main.async {
+
+                    self.title = assets.content.title
+                    
+                    switch self.mode {
+                    case .primary:
+                        self.backgroundColor = Color(hex: assets.colors.primary)
+                        self.textColor = Color(hex: assets.colors.light)
+                        self.borderColor = Color(hex: assets.colors.primary)
+                        if let imageData = Data(base64Encoded: assets.images.logoPrimary),
+                           let uiImage = UIImage(data: imageData) {
+                            self.logoImage = uiImage
+                        }
+                        
+                    case .dark:
+                        self.backgroundColor = Color(hex: assets.colors.dark)
+                        self.textColor = Color(hex: assets.colors.light)
+                        self.borderColor = Color(hex: assets.colors.dark)
+                        if let imageData = Data(base64Encoded: assets.images.logoLight),
+                           let uiImage = UIImage(data: imageData) {
+                            self.logoImage = uiImage
+                        }
+                        
+                    case .light:
+                        self.backgroundColor = Color(hex: assets.colors.light)
+                        self.textColor = Color(hex: assets.colors.dark)
+                        self.borderColor = Color(hex: assets.colors.dark)
+                        if let imageData = Data(base64Encoded: assets.images.logoDark),
+                           let uiImage = UIImage(data: imageData) {
+                            self.logoImage = uiImage
+                        }
+                    }
+                }
+            } catch {
+                print("Error decoding JSON: \(error)")
+            }
+        }.resume()
+    }
+    
+    public var body: some View {
         Button(action: {
             Task { await handleAction() }
-            
             self.showSafariView = true
         }) {
             HStack(spacing: 10) {
-                Image(logo)
-                    .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 33, height: 33)
+                if let logoImage = logoImage {
+                    Image(uiImage: logoImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 33, height: 33)
+                } else {
+                    Text("🔄")
+                }
                 
                 Text(title)
                     .fontWeight(.bold)
@@ -59,16 +127,9 @@ public struct LiwlButton: View {
                 }
             }
         }
-    }
-    
-    public var body: some View {
-        switch mode {
-        case .normal:
-            styledButton(backgroundColor: Color("frequencyTeal"), textColor: .black, borderColor: Color("frequencyTeal"), logo: "frequencyLogo")
-        case .dark:
-            styledButton(backgroundColor: .black, textColor: .white, borderColor: .black, logo: "frequencyLogoLight")
-        case .light:
-            styledButton(backgroundColor: .white, textColor: .black, borderColor: .black, logo: "frequencyLogoDark")
+        .onAppear {
+            fetchAssets()
         }
     }
 }
+
