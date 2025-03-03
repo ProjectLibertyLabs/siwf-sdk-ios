@@ -5,8 +5,8 @@ import Helpers
 
 @available(macOS 10.15, *)
 @available(iOS 15.0, *)
-public struct LiwlButton: View {
-    var mode: LiwlButtonMode
+public struct SiwfButton: View {
+    var mode: SiwfButtonMode
     var authUrl: URL?
     var handleAction: () -> Void
     
@@ -18,7 +18,7 @@ public struct LiwlButton: View {
     @State public var showSafariView: Bool = false
     
     public init(
-        mode: LiwlButtonMode = .primary,
+        mode: SiwfButtonMode = .primary,
         authUrl: URL?,
         handleAction: @escaping () -> Void
     ) {

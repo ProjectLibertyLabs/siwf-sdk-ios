@@ -1,13 +1,13 @@
 //
-//  LiwlAppUITestsLaunchTests.swift
-//  LiwlAppUITests
+//  SiwfAppUITestsLaunchTests.swift
+//  SiwfAppUITests
 //
 //  Created by Claire Olmstead on 12/6/24.
 //
 
 import XCTest
 
-final class LiwlAppUITestsLaunchTests: XCTestCase {
+final class SiwfAppUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

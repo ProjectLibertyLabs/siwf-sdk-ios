@@ -1,12 +1,12 @@
 //
 //  ContentView.swift
-//  LiwlApp
+//  SiwfApp
 //
 //  Created by Claire Olmstead on 12/6/24.
 //
 
 import SwiftUI
-import Liwl
+import Siwf
 
 struct ContentView: View {
     let exampleRequest = SiwfSignedRequest(
@@ -33,7 +33,9 @@ struct ContentView: View {
     func handleAction() -> Void {}
     
     var body: some View {
-        Liwl.createSignInButton(handleAction: handleAction, mode: .normal, authData: authData)
+        Siwf.createSignInButton(handleAction: handleAction, mode: .primary, authData: authData)
+        Siwf.createSignInButton(handleAction: handleAction, mode: .dark, authData: authData)
+        Siwf.createSignInButton(handleAction: handleAction, mode: .light, authData: authData)
     }
 }
 
