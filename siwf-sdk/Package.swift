@@ -4,29 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "Liwl",
+    name: "Siwf",
     platforms: [
         .iOS(.v15),
         .macOS(.v11)
     ],
     products: [
         .library(
-            name: "Liwl",
-            targets: ["Liwl", "Helpers", "Models"]),
+            name: "Siwf",
+            targets: ["Siwf"]),
     ],
     targets: [
         .target(
-            name: "Liwl",
-            dependencies: ["Helpers", "Models"]
-        ),
-        .target(
-            name: "Helpers"
-        ),
-        .target(
-            name: "Models"
+            name: "Siwf",
+            dependencies: []
         ),
         .testTarget(
-            name: "LiwlTests",
-            dependencies: ["Liwl"]),
+            name: "SiwfTests",
+            dependencies: ["Siwf"]),
     ]
 )

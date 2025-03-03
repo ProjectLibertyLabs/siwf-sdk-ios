@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LiwlButtonMode {
+public enum SiwfButtonMode {
     case primary
     case dark
     case light

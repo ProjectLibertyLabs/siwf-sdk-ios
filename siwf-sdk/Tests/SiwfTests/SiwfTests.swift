@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Liwl
+@testable import Siwf
 
 let exampleRequest = SiwfSignedRequest(
     requestedSignatures: SiwfRequestedSignature(

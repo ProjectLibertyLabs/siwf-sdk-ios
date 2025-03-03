@@ -1,12 +1,11 @@
 //
-//  LiwlAppApp.swift
-//  LiwlApp
+//  SiwfApp.swift
 //
 //  Created by Claire Olmstead on 12/6/24.
 //
 
 import SwiftUI
-import Liwl
+import Siwf
 
 @main
 struct SiwfAppApp: App {

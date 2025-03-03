@@ -1,14 +1,14 @@
 //
-//  LiwlAppTests.swift
-//  LiwlAppTests
+//  SiwfAppTests.swift
+//  SiwfAppTests
 //
 //  Created by Claire Olmstead on 12/6/24.
 //
 
 import XCTest
-@testable import LiwlApp
+@testable import SiwfApp
 
-final class LiwlAppTests: XCTestCase {
+final class SiwfAppTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
