@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A36F9EC72D03BB6F009A9DCD /* LiwlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F9EC62D03BB6F009A9DCD /* LiwlApp.swift */; };
+		A36F9EC92D03BB6F009A9DCD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F9EC82D03BB6F009A9DCD /* ContentView.swift */; };
+		A36F9ECB2D03BB70009A9DCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A36F9ECA2D03BB70009A9DCD /* Assets.xcassets */; };
+		A36F9ECE2D03BB70009A9DCD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A36F9ECD2D03BB70009A9DCD /* Preview Assets.xcassets */; };
+		A36F9ED82D03BB70009A9DCD /* LiwlAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F9ED72D03BB70009A9DCD /* LiwlAppTests.swift */; };
+		A36F9EE22D03BB70009A9DCD /* SiwfAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F9EE12D03BB70009A9DCD /* SiwfAppUITests.swift */; };
+		A36F9EE42D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F9EE32D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift */; };
+		A3D88F7A2D52DC89000026BF /* Liwl in Frameworks */ = {isa = PBXBuildFile; productRef = A3D88F792D52DC89000026BF /* Liwl */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A36F9ED42D03BB70009A9DCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A36F9EBB2D03BB6F009A9DCD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A36F9EC22D03BB6F009A9DCD;
+			remoteInfo = SiwfApp;
+		};
+		A36F9EDE2D03BB70009A9DCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A36F9EBB2D03BB6F009A9DCD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A36F9EC22D03BB6F009A9DCD;
+			remoteInfo = SiwfApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A36F9EC32D03BB6F009A9DCD /* LiwlApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiwlApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A36F9EC62D03BB6F009A9DCD /* LiwlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiwlApp.swift; sourceTree = "<group>"; };
+		A36F9EC82D03BB6F009A9DCD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A36F9ECA2D03BB70009A9DCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A36F9ECD2D03BB70009A9DCD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A36F9ED32D03BB70009A9DCD /* LiwlAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiwlAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A36F9ED72D03BB70009A9DCD /* LiwlAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiwlAppTests.swift; sourceTree = "<group>"; };
+		A36F9EDD2D03BB70009A9DCD /* LiwlAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiwlAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A36F9EE12D03BB70009A9DCD /* SiwfAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiwfAppUITests.swift; sourceTree = "<group>"; };
+		A36F9EE32D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiwfAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A36F9EC02D03BB6F009A9DCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3D88F7A2D52DC89000026BF /* Liwl in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9ED02D03BB70009A9DCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9EDA2D03BB70009A9DCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A36F9EBA2D03BB6F009A9DCD = {
+			isa = PBXGroup;
+			children = (
+				A36F9EC52D03BB6F009A9DCD /* LiwlApp */,
+				A36F9ED62D03BB70009A9DCD /* LiwlAppTests */,
+				A36F9EE02D03BB70009A9DCD /* LiwlAppUITests */,
+				A36F9EC42D03BB6F009A9DCD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A36F9EC42D03BB6F009A9DCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A36F9EC32D03BB6F009A9DCD /* LiwlApp.app */,
+				A36F9ED32D03BB70009A9DCD /* LiwlAppTests.xctest */,
+				A36F9EDD2D03BB70009A9DCD /* LiwlAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A36F9EC52D03BB6F009A9DCD /* LiwlApp */ = {
+			isa = PBXGroup;
+			children = (
+				A36F9EC62D03BB6F009A9DCD /* LiwlApp.swift */,
+				A36F9EC82D03BB6F009A9DCD /* ContentView.swift */,
+				A36F9ECA2D03BB70009A9DCD /* Assets.xcassets */,
+				A36F9ECC2D03BB70009A9DCD /* Preview Content */,
+			);
+			path = LiwlApp;
+			sourceTree = "<group>";
+		};
+		A36F9ECC2D03BB70009A9DCD /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A36F9ECD2D03BB70009A9DCD /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A36F9ED62D03BB70009A9DCD /* LiwlAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				A36F9ED72D03BB70009A9DCD /* LiwlAppTests.swift */,
+			);
+			path = LiwlAppTests;
+			sourceTree = "<group>";
+		};
+		A36F9EE02D03BB70009A9DCD /* LiwlAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A36F9EE12D03BB70009A9DCD /* SiwfAppUITests.swift */,
+				A36F9EE32D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift */,
+			);
+			path = LiwlAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A36F9EC22D03BB6F009A9DCD /* LiwlApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A36F9EE72D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlApp" */;
+			buildPhases = (
+				A36F9EBF2D03BB6F009A9DCD /* Sources */,
+				A36F9EC02D03BB6F009A9DCD /* Frameworks */,
+				A36F9EC12D03BB6F009A9DCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LiwlApp;
+			packageProductDependencies = (
+				A3D88F792D52DC89000026BF /* Liwl */,
+			);
+			productName = SiwfApp;
+			productReference = A36F9EC32D03BB6F009A9DCD /* LiwlApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A36F9ED22D03BB70009A9DCD /* LiwlAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A36F9EEA2D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlAppTests" */;
+			buildPhases = (
+				A36F9ECF2D03BB70009A9DCD /* Sources */,
+				A36F9ED02D03BB70009A9DCD /* Frameworks */,
+				A36F9ED12D03BB70009A9DCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A36F9ED52D03BB70009A9DCD /* PBXTargetDependency */,
+			);
+			name = LiwlAppTests;
+			productName = SiwfAppTests;
+			productReference = A36F9ED32D03BB70009A9DCD /* LiwlAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A36F9EDC2D03BB70009A9DCD /* LiwlAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A36F9EED2D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlAppUITests" */;
+			buildPhases = (
+				A36F9ED92D03BB70009A9DCD /* Sources */,
+				A36F9EDA2D03BB70009A9DCD /* Frameworks */,
+				A36F9EDB2D03BB70009A9DCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A36F9EDF2D03BB70009A9DCD /* PBXTargetDependency */,
+			);
+			name = LiwlAppUITests;
+			productName = SiwfAppUITests;
+			productReference = A36F9EDD2D03BB70009A9DCD /* LiwlAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A36F9EBB2D03BB6F009A9DCD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					A36F9EC22D03BB6F009A9DCD = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					A36F9ED22D03BB70009A9DCD = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = A36F9EC22D03BB6F009A9DCD;
+					};
+					A36F9EDC2D03BB70009A9DCD = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = A36F9EC22D03BB6F009A9DCD;
+					};
+				};
+			};
+			buildConfigurationList = A36F9EBE2D03BB6F009A9DCD /* Build configuration list for PBXProject "LiwlApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A36F9EBA2D03BB6F009A9DCD;
+			packageReferences = (
+				A3D9B24C2D726B63004BF3E1 /* XCLocalSwiftPackageReference "../siwf-sdk" */,
+			);
+			productRefGroup = A36F9EC42D03BB6F009A9DCD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A36F9EC22D03BB6F009A9DCD /* LiwlApp */,
+				A36F9ED22D03BB70009A9DCD /* LiwlAppTests */,
+				A36F9EDC2D03BB70009A9DCD /* LiwlAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A36F9EC12D03BB6F009A9DCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A36F9ECE2D03BB70009A9DCD /* Preview Assets.xcassets in Resources */,
+				A36F9ECB2D03BB70009A9DCD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9ED12D03BB70009A9DCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9EDB2D03BB70009A9DCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A36F9EBF2D03BB6F009A9DCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A36F9EC92D03BB6F009A9DCD /* ContentView.swift in Sources */,
+				A36F9EC72D03BB6F009A9DCD /* LiwlApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9ECF2D03BB70009A9DCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A36F9ED82D03BB70009A9DCD /* LiwlAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A36F9ED92D03BB70009A9DCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A36F9EE22D03BB70009A9DCD /* SiwfAppUITests.swift in Sources */,
+				A36F9EE42D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A36F9ED52D03BB70009A9DCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A36F9EC22D03BB6F009A9DCD /* LiwlApp */;
+			targetProxy = A36F9ED42D03BB70009A9DCD /* PBXContainerItemProxy */;
+		};
+		A36F9EDF2D03BB70009A9DCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A36F9EC22D03BB6F009A9DCD /* LiwlApp */;
+			targetProxy = A36F9EDE2D03BB70009A9DCD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A36F9EE52D03BB70009A9DCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A36F9EE62D03BB70009A9DCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A36F9EE82D03BB70009A9DCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.LiwlApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A36F9EE92D03BB70009A9DCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.LiwlApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A36F9EEB2D03BB70009A9DCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.LiwlAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiwlApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiwlApp";
+			};
+			name = Debug;
+		};
+		A36F9EEC2D03BB70009A9DCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.LiwlAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiwlApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiwlApp";
+			};
+			name = Release;
+		};
+		A36F9EEE2D03BB70009A9DCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.SiwfAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SiwfApp;
+			};
+			name = Debug;
+		};
+		A36F9EEF2D03BB70009A9DCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectliberty.SiwfAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SiwfApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A36F9EBE2D03BB6F009A9DCD /* Build configuration list for PBXProject "LiwlApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A36F9EE52D03BB70009A9DCD /* Debug */,
+				A36F9EE62D03BB70009A9DCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A36F9EE72D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A36F9EE82D03BB70009A9DCD /* Debug */,
+				A36F9EE92D03BB70009A9DCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A36F9EEA2D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A36F9EEB2D03BB70009A9DCD /* Debug */,
+				A36F9EEC2D03BB70009A9DCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A36F9EED2D03BB70009A9DCD /* Build configuration list for PBXNativeTarget "LiwlAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A36F9EEE2D03BB70009A9DCD /* Debug */,
+				A36F9EEF2D03BB70009A9DCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A3D9B24C2D726B63004BF3E1 /* XCLocalSwiftPackageReference "../siwf-sdk" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../siwf-sdk";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A3D88F792D52DC89000026BF /* Liwl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Liwl;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A36F9EBB2D03BB6F009A9DCD /* Project object */;
+}
