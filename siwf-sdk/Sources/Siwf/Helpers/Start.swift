@@ -35,28 +35,28 @@ func parseEndpoint(input: String, path: EndpointPath) -> String {
     }
 }
 
-public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
-    let (signedRequest, options, additionalCallbackUrlParams) = (authData.signedRequest, authData.options, authData.additionalCallbackUrlParams)
+public func generateAuthenticationUrl(authData: GenerateAuthData?, authEncodedRequest: String?) -> URL? {
     
-    let encodedSignedRequest = encodeSignedRequest(signedRequest)
-    let endpoint = parseEndpoint(input: options?.endpoint ?? "mainnet", path: EndpointPath.start)
+    guard authData?.signedRequest != nil || authEncodedRequest != nil else {
+        print("Error: must pass a signed request or an encoded signed request")
+        return nil
+    }
+
+    let encodedSignedRequest = authEncodedRequest ?? encodeSignedRequest(authData!.signedRequest)
+
+    let endpoint = parseEndpoint(input: authData?.options?.endpoint ?? "mainnet", path: EndpointPath.start)
     
     guard var urlComponents = URLComponents(string: endpoint) else {
         return nil
     }
-    
-    var queryItems = additionalCallbackUrlParams.map { URLQueryItem(name: $0.key, value: $0.value) }
-    
-    // Remove existing "signedRequest" if it exists
-    queryItems.removeAll { $0.name == "signedRequest" }
 
-    // Ensure the "signedRequest" is set last so it cannot be overridden
-    queryItems.append(URLQueryItem(name: "signedRequest", value: encodedSignedRequest))
-    
-    // Remove reserved keywords if present
-    queryItems.removeAll { $0.name == "authorizationCode" }
+    // Filter out reserved query parameters
+    let queryItems = authData?.additionalCallbackUrlParams.compactMap {
+        $0.key != "signedRequest" && $0.key != "authorizationCode" ? URLQueryItem(name: $0.key, value: $0.value) : nil
+    } ?? []
 
-    urlComponents.queryItems = queryItems
-    
+    // Append the signed request last
+    urlComponents.queryItems = queryItems + [URLQueryItem(name: "signedRequest", value: encodedSignedRequest)]
+
     return urlComponents.url
 }
