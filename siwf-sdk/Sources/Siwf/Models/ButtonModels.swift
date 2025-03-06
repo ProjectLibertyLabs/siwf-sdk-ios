@@ -14,13 +14,18 @@ public enum SiwfButtonMode {
 }
 
 public struct GenerateAuthData {
-    public let signedRequest: SiwfSignedRequest
-    public let additionalCallbackUrlParams: [String: String]
+    public let signedRequest: SignedRequest
+    public let additionalCallbackUrlParams: [String: String]?
     public let options: SiwfOptions?
     
-    public init(signedRequest: SiwfSignedRequest, additionalCallbackUrlParams: [String: String], options: SiwfOptions?) {
+    public init(signedRequest: SignedRequest, additionalCallbackUrlParams: [String: String]?, options: SiwfOptions?) {
         self.signedRequest = signedRequest
         self.additionalCallbackUrlParams = additionalCallbackUrlParams
         self.options = options
     }
+}
+
+public enum SignedRequest {
+    case siwfEncodedSignedRequest(encodedSignedRequest: String)
+    case siwfSignedRequest(signature: SiwfRequestedSignature, credentials: [SiwfRequestedCredential]? = [])
 }

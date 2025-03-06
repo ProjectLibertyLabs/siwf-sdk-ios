@@ -13,13 +13,12 @@ import Helpers
 @_exported import Models
 
 public class Siwf: ObservableObject {
-    public static func createSignInButton(handleAction: @escaping () -> Void, mode: SiwfButtonMode, authData: GenerateAuthData) -> SiwfButton {
+    public static func createSignInButton(mode: SiwfButtonMode? = .primary, authData: GenerateAuthData) -> SiwfButton {
         let authUrl = generateAuthenticationUrl(authData: authData)
         
         return SiwfButton(
-            mode: mode,
-            authUrl: authUrl,
-            handleAction: handleAction
+            mode: mode!,
+            authUrl: authUrl
         )
     }
 }

@@ -8,7 +8,6 @@ import Helpers
 public struct SiwfButton: View {
     var mode: SiwfButtonMode
     var authUrl: URL?
-    var handleAction: () -> Void
     
     @State private var title: String = ""
     @State private var backgroundColor: Color = Color(.systemGray)
@@ -19,12 +18,10 @@ public struct SiwfButton: View {
     
     public init(
         mode: SiwfButtonMode = .primary,
-        authUrl: URL?,
-        handleAction: @escaping () -> Void
+        authUrl: URL?
     ) {
         self.mode = mode
         self.authUrl = authUrl
-        self.handleAction = handleAction
     }
     
     private func fetchAssets() {
@@ -91,7 +88,6 @@ public struct SiwfButton: View {
     
     public var body: some View {
         Button(action: {
-            Task { await handleAction() }
             self.showSafariView = true
         }) {
             HStack(spacing: 10) {
