@@ -35,23 +35,20 @@ func parseEndpoint(input: String, path: EndpointPath) -> String {
     }
 }
 
-public func generateAuthenticationUrl(authData: GenerateAuthData?, authEncodedRequest: String?) -> URL? {
-    
-    guard authData?.signedRequest != nil || authEncodedRequest != nil else {
-        print("Error: must pass a signed request or an encoded signed request")
-        return nil
+public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
+    let encodedSignedRequest = switch authData.signedRequest {
+        case .siwfEncodedSignedRequest(let siwfEncodedSignedRequest): siwfEncodedSignedRequest
+        case .siwfSignedRequest(let siwfSignedRequest): encodeSignedRequest(SiwfSignedRequest(requestedSignatures: siwfSignedRequest.signature, requestedCredentials: siwfSignedRequest.credentials))
     }
 
-    let encodedSignedRequest = authEncodedRequest ?? encodeSignedRequest(authData!.signedRequest)
-
-    let endpoint = parseEndpoint(input: authData?.options?.endpoint ?? "mainnet", path: EndpointPath.start)
+    let endpoint = parseEndpoint(input: authData.options?.endpoint ?? "mainnet", path: EndpointPath.start)
     
     guard var urlComponents = URLComponents(string: endpoint) else {
         return nil
     }
 
     // Filter out reserved query parameters
-    let queryItems = authData?.additionalCallbackUrlParams.compactMap {
+    let queryItems = authData.additionalCallbackUrlParams?.compactMap {
         $0.key != "signedRequest" && $0.key != "authorizationCode" ? URLQueryItem(name: $0.key, value: $0.value) : nil
     } ?? []
 

@@ -13,8 +13,8 @@ import Helpers
 @_exported import Models
 
 public class Siwf: ObservableObject {
-    public static func createSignInButton(mode: SiwfButtonMode? = .primary, authData: GenerateAuthData? = nil, authEncodedRequest: String? = nil) -> SiwfButton {
-        let authUrl = generateAuthenticationUrl(authData: authData, authEncodedRequest: authEncodedRequest)
+    public static func createSignInButton(mode: SiwfButtonMode? = .primary, authData: GenerateAuthData) -> SiwfButton {
+        let authUrl = generateAuthenticationUrl(authData: authData)
         
         return SiwfButton(
             mode: mode!,

@@ -57,57 +57,73 @@ public struct SiwfRequestedSignature: Codable, Equatable {
     }
 }
 
-public struct AnyOfRequired: Codable, Equatable {
-    let field: String // Example placeholder, update as necessary
-}
+public enum SiwfRequestedCredential: Codable {
+    case single(SingleCredential)
+    case anyOf(AnyOfCredentials)
 
-public struct SiwfCredential: Codable, Equatable {
-    let credentialId: String // Example placeholder, update as necessary
-}
-
-public enum SiwfCredentialRequest: Codable, Equatable {
-    case anyOfRequired(AnyOfRequired)
-    case siwfCredential(SiwfCredential)
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case hash
+        case anyOf
+    }
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let anyOfRequired = try? container.decode(AnyOfRequired.self) {
-            self = .anyOfRequired(anyOfRequired)
-        } else if let siwfCredential = try? container.decode(SiwfCredential.self) {
-            self = .siwfCredential(siwfCredential)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let anyOf = try? container.decode([SingleCredential].self, forKey: .anyOf) {
+            self = .anyOf(AnyOfCredentials(anyOf: anyOf))
         } else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid SiwfCredentialRequest type")
+            let type = try container.decode(String.self, forKey: .type)
+            let hash = try container.decode([String].self, forKey: .hash)
+            self = .single(SingleCredential(type: type, hash: hash))
         }
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .anyOfRequired(let anyOfRequired):
-            try container.encode(anyOfRequired)
-        case .siwfCredential(let siwfCredential):
-            try container.encode(siwfCredential)
+        case .single(let credential):
+            try container.encode(credential.type, forKey: .type)
+            try container.encode(credential.hash, forKey: .hash)
+        case .anyOf(let credentials):
+            try container.encode(credentials.anyOf, forKey: .anyOf)
         }
     }
 }
 
-public struct SiwfSignedRequest: Codable, Equatable {
-    public let requestedSignatures: SiwfRequestedSignature
-    public let requestedCredentials: [SiwfCredentialRequest]?
+public struct SingleCredential: Codable, Equatable {
+    let type: String
+    let hash: [String]
+    
+    public init(type: String, hash: [String]) {
+        self.type = type
+        self.hash = hash
+    }
+}
 
-    public init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfCredentialRequest]? = nil) {
+public struct AnyOfCredentials: Codable, Equatable {
+    let anyOf: [SingleCredential]
+    
+    public init(anyOf: [SingleCredential]) {
+        self.anyOf = anyOf
+    }
+}
+
+
+public struct SiwfSignedRequest: Codable {
+    public let requestedSignatures: SiwfRequestedSignature
+    public let requestedCredentials: [SiwfRequestedCredential]?
+
+    public init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfRequestedCredential]? = []) {
         self.requestedSignatures = requestedSignatures
         self.requestedCredentials = requestedCredentials
-    }
-
-    // Custom Equatable conformance
-    public static func == (lhs: SiwfSignedRequest, rhs: SiwfSignedRequest) -> Bool {
-        return lhs.requestedSignatures == rhs.requestedSignatures &&
-               lhs.requestedCredentials == rhs.requestedCredentials
     }
 }
 
 public struct SiwfOptions {
     public var endpoint: String
-    public var loginMsgUri: String?
+    
+    public init(endpoint: String) {
+        self.endpoint = endpoint
+    }
 }

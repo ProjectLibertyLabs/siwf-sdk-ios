@@ -5,15 +5,14 @@
 //
 
 import SwiftUI
-import Siwf
 
 @main
-struct SiwfAppApp: App {
+struct SiwfApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
-                    .navigationTitle("Demo App")
+                    .navigationTitle("SIWF Demo App")
             }
         }
     }

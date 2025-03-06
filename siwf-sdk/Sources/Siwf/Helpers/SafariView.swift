@@ -10,7 +10,7 @@ public struct SafariView: UIViewControllerRepresentable {
         self.url = url
     }
 
-    @available(iOS 13.0, *)  // Ensures it only compiles on iOS
+    @available(iOS 13.0, *)
     public func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
         return SFSafariViewController(url: url)
     }
@@ -19,4 +19,4 @@ public struct SafariView: UIViewControllerRepresentable {
     public func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {}
 }
 
-#endif // End of iOS-only check
+#endif
