@@ -7,7 +7,7 @@ import Helpers
 @available(iOS 15.0, *)
 public struct SiwfButton: View {
     var mode: SiwfButtonMode
-    var authUrl: URL?
+    var authUrl: URL
     
     @State private var title: String = ""
     @State private var backgroundColor: Color = Color(.systemGray)
@@ -18,7 +18,7 @@ public struct SiwfButton: View {
     
     public init(
         mode: SiwfButtonMode = .primary,
-        authUrl: URL?
+        authUrl: URL
     ) {
         self.mode = mode
         self.authUrl = authUrl
@@ -28,19 +28,18 @@ public struct SiwfButton: View {
         let urlString = "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json"
         
         guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
+            fatalError("Failed to parse URL")
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                print("Error fetching assets: \(error)")
-                return
+//                TODO: fallback to built in assets
+                fatalError("Error fetching assets: \(error)")
             }
             
             guard let data = data else {
-                print("No data received")
-                return
+                fatalError("No data received")
+//                TODO: fallback to built in assets
             }
             
             do {
@@ -81,7 +80,8 @@ public struct SiwfButton: View {
                     }
                 }
             } catch {
-                print("Error decoding JSON: \(error)")
+//                TODO: fallback to built in assets
+                fatalError("Error decoding JSON: \(error)")
             }
         }.resume()
     }
@@ -114,13 +114,11 @@ public struct SiwfButton: View {
             )
             .cornerRadius(24)
             .sheet(isPresented: $showSafariView) {
-                if let url = authUrl {
-                    #if os(iOS)
-                        SafariView(url: url)
-                    #elseif os(macOS)
-                        NSWorkspace.shared.open(url)
-                    #endif
-                }
+                #if os(iOS)
+                    SafariView(url: authUrl)
+                #elseif os(macOS)
+                    NSWorkspace.shared.open(authUrl)
+                #endif
             }
         }
         .onAppear {
