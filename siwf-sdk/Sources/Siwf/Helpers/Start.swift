@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Models
 
 func encodeSignedRequest(_ request: SiwfSignedRequest) -> String? {
     do {
@@ -35,7 +34,7 @@ func parseEndpoint(input: String, path: EndpointPath) -> String {
     }
 }
 
-public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
+public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL {
     let encodedSignedRequest = switch authData.signedRequest {
         case .siwfEncodedSignedRequest(let siwfEncodedSignedRequest): siwfEncodedSignedRequest
         case .siwfSignedRequest(let siwfSignedRequest): encodeSignedRequest(SiwfSignedRequest(requestedSignatures: siwfSignedRequest.signature, requestedCredentials: siwfSignedRequest.credentials))
@@ -44,7 +43,7 @@ public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
     let endpoint = parseEndpoint(input: authData.options?.endpoint ?? "mainnet", path: EndpointPath.start)
     
     guard var urlComponents = URLComponents(string: endpoint) else {
-        return nil
+        fatalError("Failed to correctly parse endpoint")
     }
 
     // Filter out reserved query parameters
@@ -55,5 +54,9 @@ public func generateAuthenticationUrl(authData: GenerateAuthData) -> URL? {
     // Append the signed request last
     urlComponents.queryItems = queryItems + [URLQueryItem(name: "signedRequest", value: encodedSignedRequest)]
 
-    return urlComponents.url
+    guard var url = urlComponents.url else {
+            fatalError("Failed to correctly parse endpoint")
+        }
+
+    return url
 }
