@@ -5,6 +5,7 @@ import Foundation
 public struct SiwfButton: View {
     var mode: SiwfButtonMode
     var authUrl: URL
+    @ObservedObject private var siwfCoordinator = Siwf.shared
     
     @State private var title: String = ""
     @State private var backgroundColor: Color = Color(.systemGray)
@@ -86,6 +87,7 @@ public struct SiwfButton: View {
     public var body: some View {
         Button(action: {
             self.showSafariView = true
+            siwfCoordinator.safariViewActive = true
         }) {
             HStack(spacing: 10) {
                 if let logoImage = logoImage {
@@ -111,15 +113,16 @@ public struct SiwfButton: View {
             )
             .cornerRadius(24)
             .sheet(isPresented: $showSafariView) {
-                #if os(iOS)
-                    SafariView(url: authUrl)
-                #elseif os(macOS)
-                    NSWorkspace.shared.open(authUrl)
-                #endif
+                SafariView(url: authUrl)
             }
         }
         .onAppear {
             fetchAssets()
+        }
+        .onChange(of: siwfCoordinator.safariViewActive) { active in
+            if !active && showSafariView {
+                showSafariView = false
+            }
         }
     }
 }
