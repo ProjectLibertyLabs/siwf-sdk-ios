@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Models
 
 func encodeSignedRequest(_ request: SiwfSignedRequest) -> String? {
     do {

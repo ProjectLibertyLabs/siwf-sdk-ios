@@ -1,9 +1,6 @@
 import SwiftUI
 import Foundation
-import Models
-import Helpers
 
-@available(macOS 10.15, *)
 @available(iOS 15.0, *)
 public struct SiwfButton: View {
     var mode: SiwfButtonMode
