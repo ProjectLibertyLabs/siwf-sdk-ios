@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import Siwf
 
 @main
 struct SiwfApp: App {
@@ -14,8 +15,11 @@ struct SiwfApp: App {
                 ContentView()
                     .navigationTitle("SIWF Demo App")
             }
+            
+            .onOpenURL { url in
+                Siwf.handleRedirectUrl(redirectUrl: URL(string: "siwfdemoapp://login")!, url: url)
+            }
         }
     }
-    
 }
 
