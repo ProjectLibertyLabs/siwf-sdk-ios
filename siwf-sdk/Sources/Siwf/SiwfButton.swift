@@ -1,88 +1,28 @@
 import SwiftUI
 import Foundation
 
+/// A customizable Sign-In With Frequency (SIWF) button.
+///
+/// - Parameters:
+///   - mode: The visual style of the button (Primary, Dark, Light).
+///   - authUrl: The authentication URL that the button triggers.
 @available(iOS 15.0, *)
 public struct SiwfButton: View {
-    var mode: SiwfButtonMode
-    var authUrl: URL
-    @ObservedObject private var siwfCoordinator = Siwf.shared
+    let mode: SiwfButtonMode
+    let authUrl: URL
     
-    @State private var title: String = ""
-    @State private var backgroundColor: Color = Color(.systemGray)
-    @State private var textColor: Color = Color(.white)
-    @State private var borderColor: Color = Color(.systemGray)
-    @State private var logoImage: UIImage? = nil
+    @ObservedObject private var siwfCoordinator = Siwf.shared
     @State public var showSafariView: Bool = false
+    @State private var buttonStyle: ButtonStyles
     
     public init(
-        mode: SiwfButtonMode = .primary,
-        authUrl: URL
-    ) {
-        self.mode = mode
-        self.authUrl = authUrl
-    }
-    
-    private func fetchAssets() {
-        let urlString = "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json"
-        
-        guard let url = URL(string: urlString) else {
-            fatalError("Failed to parse URL")
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-//                TODO: fallback to built in assets
-                fatalError("Error fetching assets: \(error)")
-            }
-            
-            guard let data = data else {
-                fatalError("No data received")
-//                TODO: fallback to built in assets
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let assets = try decoder.decode(Assets.self, from: data)
-            
-                DispatchQueue.main.async {
-
-                    self.title = assets.content.title
-                    
-                    switch self.mode {
-                    case .primary:
-                        self.backgroundColor = Color(hex: assets.colors.primary)
-                        self.textColor = Color(hex: assets.colors.light)
-                        self.borderColor = Color(hex: assets.colors.primary)
-                        if let imageData = Data(base64Encoded: assets.images.logoPrimary),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                        
-                    case .dark:
-                        self.backgroundColor = Color(hex: assets.colors.dark)
-                        self.textColor = Color(hex: assets.colors.light)
-                        self.borderColor = Color(hex: assets.colors.dark)
-                        if let imageData = Data(base64Encoded: assets.images.logoLight),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                        
-                    case .light:
-                        self.backgroundColor = Color(hex: assets.colors.light)
-                        self.textColor = Color(hex: assets.colors.dark)
-                        self.borderColor = Color(hex: assets.colors.dark)
-                        if let imageData = Data(base64Encoded: assets.images.logoDark),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                    }
-                }
-            } catch {
-//                TODO: fallback to built in assets
-                fatalError("Error decoding JSON: \(error)")
-            }
-        }.resume()
-    }
+           mode: SiwfButtonMode,
+           authUrl: URL
+       ) {
+           self.mode = mode
+           self.authUrl = authUrl
+           _buttonStyle = State(initialValue: getButtonStyle(mode: mode, assets: getLocalAssets()))
+       }
     
     public var body: some View {
         Button(action: {
@@ -90,7 +30,7 @@ public struct SiwfButton: View {
             siwfCoordinator.safariViewActive = true
         }) {
             HStack(spacing: 10) {
-                if let logoImage = logoImage {
+                if let logoImage = buttonStyle.logoImage {
                     Image(uiImage: logoImage)
                         .resizable()
                         .scaledToFit()
@@ -99,17 +39,17 @@ public struct SiwfButton: View {
                     Text("🔄")
                 }
                 
-                Text(title)
+                Text(buttonStyle.title)
                     .fontWeight(.bold)
             }
             .padding(.vertical, 6)
             .padding(.leading, -6)
             .frame(width: 254)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
+            .background(buttonStyle.backgroundColor)
+            .foregroundColor(buttonStyle.textColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 24)
-                    .stroke(borderColor, lineWidth: 2)
+                    .stroke(buttonStyle.borderColor, lineWidth: 2)
             )
             .cornerRadius(24)
             .sheet(isPresented: $showSafariView) {
@@ -117,7 +57,12 @@ public struct SiwfButton: View {
             }
         }
         .onAppear {
-            fetchAssets()
+            Task {
+                // If we get remote remote assets, set button styles to latest
+                if let remoteAssets = try? await getRemoteAssets() {
+                    buttonStyle = getButtonStyle(mode: mode, assets: remoteAssets)
+                }
+            }
         }
         .onChange(of: siwfCoordinator.safariViewActive) { active in
             if !active && showSafariView {
@@ -126,4 +71,3 @@ public struct SiwfButton: View {
         }
     }
 }
-

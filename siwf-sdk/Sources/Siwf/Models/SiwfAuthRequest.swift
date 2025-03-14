@@ -1,17 +1,9 @@
 //
-//  ButtonModels.swift
+//  SiwfAuthRequest.swift
+//  Siwf
 //
+//  Created by Claire Olmstead on 3/14/25.
 //
-//  Created by Claire Olmstead on 2/21/25.
-//
-
-import Foundation
-
-public enum SiwfButtonMode {
-    case primary
-    case dark
-    case light
-}
 
 public struct GenerateAuthData {
     public let signedRequest: SignedRequest
@@ -29,3 +21,12 @@ public enum SignedRequest {
     case siwfEncodedSignedRequest(encodedSignedRequest: String)
     case siwfSignedRequest(signature: SiwfRequestedSignature, credentials: [SiwfRequestedCredential]? = [])
 }
+
+public struct SiwfOptions {
+    public var endpoint: String
+    
+    public init(endpoint: String) {
+        self.endpoint = endpoint
+    }
+}
+

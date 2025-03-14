@@ -109,7 +109,6 @@ public struct AnyOfCredentials: Codable, Equatable {
     }
 }
 
-
 public struct SiwfSignedRequest: Codable {
     public let requestedSignatures: SiwfRequestedSignature
     public let requestedCredentials: [SiwfRequestedCredential]?
@@ -117,13 +116,5 @@ public struct SiwfSignedRequest: Codable {
     public init(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfRequestedCredential]? = []) {
         self.requestedSignatures = requestedSignatures
         self.requestedCredentials = requestedCredentials
-    }
-}
-
-public struct SiwfOptions {
-    public var endpoint: String
-    
-    public init(endpoint: String) {
-        self.endpoint = endpoint
     }
 }
