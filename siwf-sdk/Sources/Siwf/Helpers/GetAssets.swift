@@ -5,7 +5,7 @@
 //  Created by Claire Olmstead on 3/14/25.
 //
 
-import UIKit
+import SwiftUI
 
 struct Assets: Codable {
     let colors: Colors
@@ -29,10 +29,9 @@ struct Images: Codable {
     let logoDark: String
 }
 
-let assetsURL = URL(string: "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json")!
-
 /// Fetches assets JSON from the remote server and returns remote assets
-public func getRemoteAssets() async throws -> Assets? {
+func getRemoteAssets() async throws -> Assets? {
+    let assetsURL = URL(string: "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json")!
     var request = URLRequest(url: assetsURL)
     request.httpMethod = "GET"
     
@@ -43,13 +42,11 @@ public func getRemoteAssets() async throws -> Assets? {
         return nil
     }
     
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    return try decoder.decode(Assets.self, from: data)
+    return try JSONDecoder().decode(Assets.self, from: data)
 }
 
 /// Returns local assets.
-public func getLocalAssets() -> Assets {
+func getLocalAssets() -> Assets {
     return Assets(
         colors: Colors(
             primary: "#54B2AB",

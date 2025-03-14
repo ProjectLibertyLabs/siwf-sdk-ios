@@ -5,22 +5,21 @@
 //  Created by Claire Olmstead on 3/14/25.
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
 public struct ButtonStyles {
     var title: String
-    var backgroundColor: UIColor
-    var textColor: UIColor
-    var borderColor: UIColor
+    var backgroundColor: Color
+    var textColor: Color
+    var borderColor: Color
     var logoImage: UIImage?
 }
 
-public func getButtonStyle(mode: SiwfButtonMode, assets: Assets) -> ButtonStyles {
+func getButtonStyle(mode: SiwfButtonMode, assets: Assets) -> ButtonStyles {
     let title = assets.content.title
-    let primaryColor = UIColor(hex: assets.colors.primary)
-    let darkColor = UIColor(hex: assets.colors.dark)
-    let lightColor = UIColor(hex: assets.colors.light)
+    let primaryColor = Color(hex: assets.colors.primary)
+    let darkColor = Color(hex: assets.colors.dark)
+    let lightColor = Color(hex: assets.colors.light)
 
     switch mode {
     case .primary:

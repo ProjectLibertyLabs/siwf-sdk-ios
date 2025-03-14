@@ -9,54 +9,65 @@ import Foundation
 @available(iOS 15.0, *)
 public struct SiwfButton: View {
     let mode: SiwfButtonMode
-    let authUrl: URL?
+    let authUrl: URL
     
+    @ObservedObject private var siwfCoordinator = Siwf.shared
+    @State public var showSafariView: Bool = false
+    @State private var buttonStyle: ButtonStyles
     
-    @State private var buttonStyle1 = getButtonStyle(mode: SiwfButtonMode.primary, assets: getLocalAssets())
-
-    var body: some View {
-        Button(action: openAuthUrl) {
+    public init(
+           mode: SiwfButtonMode = .primary,
+           authUrl: URL
+       ) {
+           self.mode = mode
+           self.authUrl = authUrl
+           _buttonStyle = State(initialValue: getButtonStyle(mode: mode, assets: getLocalAssets()))
+       }
+    
+    public var body: some View {
+        Button(action: {
+            self.showSafariView = true
+            siwfCoordinator.safariViewActive = true
+        }) {
             HStack(spacing: 10) {
-                if let logo = buttonStyle.logoImage {
-                    Image(uiImage: logo)
+                if let logoImage = buttonStyle.logoImage {
+                    Image(uiImage: logoImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 33, height: 33)
                 } else {
                     Text("🔄")
-                        .font(.system(size: 24))
                 }
+                
                 Text(buttonStyle.title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color(uiColor: buttonStyle.textColor))
             }
-            .padding()
-            .frame(height: 50)
-            .background(Color(uiColor: buttonStyle.backgroundColor))
-            .cornerRadius(24)
+            .padding(.vertical, 6)
+            .padding(.leading, -6)
+            .frame(width: 254)
+            .background(buttonStyle.backgroundColor)
+            .foregroundColor(buttonStyle.textColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 24)
-                    .stroke(Color(uiColor: buttonStyle.borderColor), lineWidth: 2)
+                    .stroke(buttonStyle.borderColor, lineWidth: 2)
             )
-        }
-        .padding(8)
-        .disabled(authUrl == nil || authUrl?.absoluteString.isEmpty == true)
-        .task {
-            print("⏳ Fetching SIWF assets...")
-            if let assets = await getRemoteAssets() {
-                buttonStyle = getButtonStyle(mode: mode, assets: assets)
+            .cornerRadius(24)
+            .sheet(isPresented: $showSafariView) {
+                SafariView(url: authUrl)
             }
         }
-    }
-
-    /// Opens the authentication URL in the default browser.
-    private func openAuthUrl() {
-        guard let url = authUrl else { return }
-        print("🔗 Opening authentication URL: \(url)")
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            print("❌ Error opening authentication URL.")
+        .onAppear {
+            Task {
+                // If we get remote remote assets, set button styles to latest
+                if let remoteAssets = try? await getRemoteAssets() {
+                    buttonStyle = getButtonStyle(mode: mode, assets: remoteAssets)
+                }
+            }
+        }
+        .onChange(of: siwfCoordinator.safariViewActive) { active in
+            if !active && showSafariView {
+                showSafariView = false
+            }
         }
     }
 }

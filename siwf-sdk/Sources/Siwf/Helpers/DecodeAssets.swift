@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
 /// Decodes a Base64-encoded image string into a `UIImage`.
 ///
