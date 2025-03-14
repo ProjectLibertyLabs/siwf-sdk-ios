@@ -1,129 +1,62 @@
 import SwiftUI
 import Foundation
 
+/// A customizable Sign-In With Frequency (SIWF) button.
+///
+/// - Parameters:
+///   - mode: The visual style of the button (Primary, Dark, Light).
+///   - authUrl: The authentication URL that the button triggers.
 @available(iOS 15.0, *)
 public struct SiwfButton: View {
-    var mode: SiwfButtonMode
-    var authUrl: URL
-    @ObservedObject private var siwfCoordinator = Siwf.shared
+    let mode: SiwfButtonMode
+    let authUrl: URL?
     
-    @State private var title: String = ""
-    @State private var backgroundColor: Color = Color(.systemGray)
-    @State private var textColor: Color = Color(.white)
-    @State private var borderColor: Color = Color(.systemGray)
-    @State private var logoImage: UIImage? = nil
-    @State public var showSafariView: Bool = false
     
-    public init(
-        mode: SiwfButtonMode = .primary,
-        authUrl: URL
-    ) {
-        self.mode = mode
-        self.authUrl = authUrl
-    }
-    
-    private func fetchAssets() {
-        let urlString = "https://projectlibertylabs.github.io/siwf/v2/assets/assets.json"
-        
-        guard let url = URL(string: urlString) else {
-            fatalError("Failed to parse URL")
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-//                TODO: fallback to built in assets
-                fatalError("Error fetching assets: \(error)")
-            }
-            
-            guard let data = data else {
-                fatalError("No data received")
-//                TODO: fallback to built in assets
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let assets = try decoder.decode(Assets.self, from: data)
-            
-                DispatchQueue.main.async {
+    @State private var buttonStyle1 = getButtonStyle(mode: SiwfButtonMode.primary, assets: getLocalAssets())
 
-                    self.title = assets.content.title
-                    
-                    switch self.mode {
-                    case .primary:
-                        self.backgroundColor = Color(hex: assets.colors.primary)
-                        self.textColor = Color(hex: assets.colors.light)
-                        self.borderColor = Color(hex: assets.colors.primary)
-                        if let imageData = Data(base64Encoded: assets.images.logoPrimary),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                        
-                    case .dark:
-                        self.backgroundColor = Color(hex: assets.colors.dark)
-                        self.textColor = Color(hex: assets.colors.light)
-                        self.borderColor = Color(hex: assets.colors.dark)
-                        if let imageData = Data(base64Encoded: assets.images.logoLight),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                        
-                    case .light:
-                        self.backgroundColor = Color(hex: assets.colors.light)
-                        self.textColor = Color(hex: assets.colors.dark)
-                        self.borderColor = Color(hex: assets.colors.dark)
-                        if let imageData = Data(base64Encoded: assets.images.logoDark),
-                           let uiImage = UIImage(data: imageData) {
-                            self.logoImage = uiImage
-                        }
-                    }
-                }
-            } catch {
-//                TODO: fallback to built in assets
-                fatalError("Error decoding JSON: \(error)")
-            }
-        }.resume()
-    }
-    
-    public var body: some View {
-        Button(action: {
-            self.showSafariView = true
-            siwfCoordinator.safariViewActive = true
-        }) {
+    var body: some View {
+        Button(action: openAuthUrl) {
             HStack(spacing: 10) {
-                if let logoImage = logoImage {
-                    Image(uiImage: logoImage)
+                if let logo = buttonStyle.logoImage {
+                    Image(uiImage: logo)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 33, height: 33)
                 } else {
                     Text("🔄")
+                        .font(.system(size: 24))
                 }
-                
-                Text(title)
+                Text(buttonStyle.title)
                     .fontWeight(.bold)
+                    .foregroundColor(Color(uiColor: buttonStyle.textColor))
             }
-            .padding(.vertical, 6)
-            .padding(.leading, -6)
-            .frame(width: 254)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
+            .padding()
+            .frame(height: 50)
+            .background(Color(uiColor: buttonStyle.backgroundColor))
+            .cornerRadius(24)
             .overlay(
                 RoundedRectangle(cornerRadius: 24)
-                    .stroke(borderColor, lineWidth: 2)
+                    .stroke(Color(uiColor: buttonStyle.borderColor), lineWidth: 2)
             )
-            .cornerRadius(24)
-            .sheet(isPresented: $showSafariView) {
-                SafariView(url: authUrl)
-            }
         }
-        .onAppear {
-            fetchAssets()
-        }
-        .onChange(of: siwfCoordinator.safariViewActive) { active in
-            if !active && showSafariView {
-                showSafariView = false
+        .padding(8)
+        .disabled(authUrl == nil || authUrl?.absoluteString.isEmpty == true)
+        .task {
+            print("⏳ Fetching SIWF assets...")
+            if let assets = await getRemoteAssets() {
+                buttonStyle = getButtonStyle(mode: mode, assets: assets)
             }
         }
     }
-}
 
+    /// Opens the authentication URL in the default browser.
+    private func openAuthUrl() {
+        guard let url = authUrl else { return }
+        print("🔗 Opening authentication URL: \(url)")
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            print("❌ Error opening authentication URL.")
+        }
+    }
+}
