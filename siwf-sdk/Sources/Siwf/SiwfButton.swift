@@ -16,7 +16,7 @@ public struct SiwfButton: View {
     @State private var buttonStyle: ButtonStyles
     
     public init(
-           mode: SiwfButtonMode = .primary,
+           mode: SiwfButtonMode,
            authUrl: URL
        ) {
            self.mode = mode
