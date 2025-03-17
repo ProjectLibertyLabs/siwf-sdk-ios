@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Represents different button modes for SIWF authentication.
+ */
 public enum SiwfButtonMode {
     case primary
     case dark

@@ -8,13 +8,22 @@
 import SwiftUI
 import SafariServices
 
+/**
+ * Object containing helper functions for Sign-In With Frequency (SIWF) authentication.
+ */
 public class Siwf: ObservableObject {
     // Singleton to support closing the button when the redirect happens
     public static let shared = Siwf()
     @Published var safariViewActive = false
 
-    public static func createSignInButton(mode: SiwfButtonMode = .primary, authData: GenerateAuthData) -> SiwfButton {
-        let authUrl = generateAuthenticationUrl(authData: authData)
+    /**
+     * Creates a sign-in button that initiates the authentication process.
+     *
+     * @param mode - The visual style of the button (Primary, Dark, Light).
+     * @param authRequest - The authentication request containing signed request data and options.
+     */
+    public static func createSignInButton(mode: SiwfButtonMode = .primary, authRequest: GenerateAuthRequest) -> SiwfButton {
+        let authUrl = generateAuthUrl(authRequest: authRequest)
         
         return SiwfButton(
             mode: mode,
@@ -22,13 +31,25 @@ public class Siwf: ObservableObject {
         )
     }
 
+    /**
+     * Handles authentication redirects by extracting the authorization code from the incoming URL.
+     *
+     *This function verifies that the incoming URL matches the expected redirect URL, extracts the
+     * "authorizationCode" query parameter, and then processes it using the provided callback.
+     * It also disables the active Safari view once authentication is complete.
+     *
+     * @param incomingUrl - The URL received after authentication.
+     * @param redirectUrl - The expected redirect URL registered by the app.
+     * @param processAuthorization - A closure that handles the extracted authorization code.
+     */
+
     public static func handleRedirectUrl(incomingUrl: URL, redirectUrl: URL, processAuthorization: (_ authorizationCode: String) -> Void) -> Void {
         // No active safari view? Cannot be us
         if !shared.safariViewActive {
             return
         }
         guard let incomingUrl = URLComponents(url: incomingUrl, resolvingAgainstBaseURL: false),
-              let authCode = incomingUrl.queryItems?.first(where: { $0.name == "authorizationCode" })?.value else { return };
+              let authorizationCode = incomingUrl.queryItems?.first(where: { $0.name == "authorizationCode" })?.value else { return };
 
         let redirect = URLComponents(url: redirectUrl, resolvingAgainstBaseURL: false)
 
@@ -37,11 +58,11 @@ public class Siwf: ObservableObject {
             return
         }
         
-        debugPrint("Captured authorizationCode: \(authCode)")
+        debugPrint("Captured authorizationCode: \(authorizationCode)")
         // Trigger the closing of any button's SafariView
         shared.safariViewActive = false
         // TODO: Do we want to swap the authorizationCode for the full payload?
         // Trigger the callback
-        processAuthorization(authCode)
+        processAuthorization(authorizationCode)
     }
 }

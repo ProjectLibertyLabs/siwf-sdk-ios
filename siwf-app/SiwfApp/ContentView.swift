@@ -8,6 +8,12 @@
 import SwiftUI
 import Siwf
 
+/**
+ * AuthScreen - Displays sign-in buttons
+ *
+ * Includes examples of Signed Requests and Encoded Signed Requests
+ */
+
 struct ContentView: View {
     let exampleRequest = SignedRequest.siwfSignedRequest(
         signature: SiwfRequestedSignature(
@@ -44,11 +50,11 @@ struct ContentView: View {
     var encodedSignedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest:  "eyJyZXF1ZXN0ZWRTaWduYXR1cmVzIjp7InB1YmxpY0tleSI6eyJlbmNvZGVkVmFsdWUiOiJmNmNuM0NpVlFqRGpQRmhTekh4WkM5NFRKZzNBNU1ZNlFCTkpSZXpnQ21TVVNqdzdSIiwiZW5jb2RpbmciOiJiYXNlNTgiLCJmb3JtYXQiOiJzczU4IiwidHlwZSI6IlNyMjU1MTkifSwic2lnbmF0dXJlIjp7ImFsZ28iOiJTUjI1NTE5IiwiZW5jb2RpbmciOiJiYXNlMTYiLCJlbmNvZGVkVmFsdWUiOiIweGNlYjA5ZDljNTBiNjZlZGZkNGZlYTBlYzI1MTU3NTQ4NTdiNTAwYmExYWY0NzI1MzE4Y2MxYTdmYzE1YWVmMDhlOGRmMmM4YTE1NjA2ODNmM2JjZTA2MzBhYWVlMTU5NjQ4YTMwNWY0NTJkZTc1MTk3OGE0N2RhNTY4MjM1ZTgzIn0sInBheWxvYWQiOnsiY2FsbGJhY2siOiJzaXdmZGVtb2FwcDovL2xvZ2luIiwicGVybWlzc2lvbnMiOls3LDgsOSwxMF19fSwicmVxdWVzdGVkQ3JlZGVudGlhbHMiOlt7InR5cGUiOiJWZXJpZmllZEdyYXBoS2V5Q3JlZGVudGlhbCIsImhhc2giOlsiYmNpcW1kdm14ZDU0enZlNWtpZnljZ3NkdG9haHM1ZWNmNGhhbDJ0czNlZXhrZ29jeWM1b2NhMnkiXX0seyJhbnlPZiI6W3sidHlwZSI6IlZlcmlmaWVkRW1haWxBZGRyZXNzQ3JlZGVudGlhbCIsImhhc2giOlsiYmNpcWU0cW9jemhmdGljaTRkemZ2ZmJlbDdmbzRoNHNyNWdyY28zb292d3lrNnk0eW5mNDR0c2kiXX0seyJ0eXBlIjoiVmVyaWZpZWRQaG9uZU51bWJlckNyZWRlbnRpYWwiLCJoYXNoIjpbImJjaXFqc3BuYndwYzN3ang0ZmV3Y2VrNWRheXNkanBiZjV4amltejV3bnU1dWo3ZTN2dTJ1d25xIl19XX1dfQ")
     
     
-    var authData: GenerateAuthData {
-        GenerateAuthData(
+    var authRequest: GenerateAuthRequest {
+        GenerateAuthRequest(
             signedRequest: encodedSignedRequest,
             additionalCallbackUrlParams: [:],
-            options: SiwfOptions(
+            options: Options(
                 endpoint: "testnet"
             )
         )
@@ -56,14 +62,14 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            // Primary color mode with pre-encoded request
-            Siwf.createSignInButton(authData: authData)
+            // Primary Sign-In Button (Default)
+            Siwf.createSignInButton(authRequest: authRequest)
             
-            // Dark color mode
-            Siwf.createSignInButton(mode: .dark, authData: authData)
+            // Dark-themed Sign-In Button
+            Siwf.createSignInButton(mode: .dark, authRequest: authRequest)
             
-            // Light color mode
-            Siwf.createSignInButton(mode: .light, authData: authData)
+            // Light-themed Sign-In Button (Uses non-encoded request)
+            Siwf.createSignInButton(mode: .light, authRequest: authRequest)
         }
         .padding()
     }

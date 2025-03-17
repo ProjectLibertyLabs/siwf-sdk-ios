@@ -26,6 +26,7 @@ public struct SiwfButton: View {
     
     public var body: some View {
         Button(action: {
+            print("SIWF Button tapped. Opening authentication URL: \(authUrl.absoluteString)")
             self.showSafariView = true
             siwfCoordinator.safariViewActive = true
         }) {
@@ -58,14 +59,16 @@ public struct SiwfButton: View {
         }
         .onAppear {
             Task {
-                // If we get remote remote assets, set button styles to latest
+                print("⏳ Fetching SIWF assets...")
                 if let remoteAssets = try? await getRemoteAssets() {
+                    // If we get remote remote assets, set button styles to latest
                     buttonStyle = getButtonStyle(mode: mode, assets: remoteAssets)
                 }
             }
         }
         .onChange(of: siwfCoordinator.safariViewActive) { active in
             if !active && showSafariView {
+                print("❌ SafariView dismissed. Updating state.")
                 showSafariView = false
             }
         }
