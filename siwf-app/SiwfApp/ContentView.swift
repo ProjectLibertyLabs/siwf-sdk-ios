@@ -55,10 +55,17 @@ struct ContentView: View {
     
     var authRequest: GenerateAuthRequest {
         GenerateAuthRequest(
+<<<<<<< HEAD
             signedRequest: signedRequest, // Switch to encodedSignedRequest if needed
             additionalCallbackUrlParams: [:],
             options: Options(
                 endpoint: "testnet" // Switch to "mainnet" if needed
+=======
+            signedRequest: encodedSignedRequest,
+            additionalCallbackUrlParams: [:],
+            options: Options(
+                endpoint: "testnet"
+>>>>>>> 97f3d71 (refactor, rename, and add logs)
             )
         )
     }
