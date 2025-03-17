@@ -58,7 +58,7 @@ func resolveAuthEndpoint(environment: String, endpoint: AuthEndpoint) -> String 
 public func generateAuthUrl(authRequest: GenerateAuthRequest) -> URL {
     let encodedSignedRequest = switch authRequest.signedRequest {
         case .siwfEncodedSignedRequest(let siwfEncodedSignedRequest): siwfEncodedSignedRequest
-        case .siwfSignedRequest(let siwfSignedRequest): encodeSignedRequest(SiwfSignedRequest(requestedSignatures: siwfSignedRequest.signature, requestedCredentials: siwfSignedRequest.credentials))
+        case .siwfSignedRequest(let siwfSignedRequest): encodeSignedRequest(SiwfSignedRequest(requestedSignatures: siwfSignedRequest.requestedSignatures, requestedCredentials: siwfSignedRequest.requestedCredentials))
     }
 
     let authEndpoint = resolveAuthEndpoint(environment: authRequest.options?.endpoint ?? "mainnet", endpoint: AuthEndpoint.start)
