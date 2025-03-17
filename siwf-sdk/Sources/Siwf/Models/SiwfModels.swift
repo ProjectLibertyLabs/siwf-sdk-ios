@@ -10,7 +10,6 @@ import Foundation
 /**
  * Core SIWF data models used for authentication and signing.
  */
-
 public struct SiwfPublicKey: Codable, Equatable {
     let encodedValue: String
     let encoding: String
