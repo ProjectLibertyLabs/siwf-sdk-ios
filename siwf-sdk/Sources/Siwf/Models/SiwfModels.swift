@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Core SIWF data models used for authentication and signing.
+ */
 public struct SiwfPublicKey: Codable, Equatable {
     let encodedValue: String
     let encoding: String
@@ -57,6 +60,9 @@ public struct SiwfRequestedSignature: Codable, Equatable {
     }
 }
 
+/**
+ * Represents a requested credential in the authentication flow.
+ */
 public enum SiwfRequestedCredential: Codable {
     case single(SingleCredential)
     case anyOf(AnyOfCredentials)

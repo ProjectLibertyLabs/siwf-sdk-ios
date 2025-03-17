@@ -19,12 +19,16 @@ struct SiwfApp: App {
                     .navigationTitle("SIWF Demo App")
             }
             .onOpenURL { url in
+                guard let redirectUrl = URL(string: "siwfdemoapp://login") else {
+                    print("❌ Error: Invalid redirect URL.")
+                    return
+                }
+
                 Siwf.handleRedirectUrl(
                     incomingUrl: url,
-                    redirectUrl: URL(
-                        string: "siwfdemoapp://login"
-                    )!,
+                    redirectUrl: redirectUrl,
                     processAuthorization: { code in
+                        print("✅ Successfully extracted authorization code: \(code)")
                         authorizationCode = code
                         showAlert = true
                     }
