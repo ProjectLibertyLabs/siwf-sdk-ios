@@ -26,27 +26,27 @@ struct ContentView: View {
                     8,
                     9,
                     10
-                  ]
+                ]
             )
         ),
         requestedCredentials: [
             // Graph Key Credential (Required)
             SiwfRequestedCredential.single(SingleCredential(
-                    type: "VerifiedGraphKeyCredential",
-                    hash: ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
-                )),
+                type: "VerifiedGraphKeyCredential",
+                hash: ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
+            )),
             // AnyOfRequired - The user must provide at least one of these credentials
             SiwfRequestedCredential.anyOf(AnyOfCredentials(anyOf: [
-                    SingleCredential(
-                        type: "VerifiedEmailAddressCredential",
-                        hash: ["bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi"]
-                    ),
-                    SingleCredential(
-                        type: "VerifiedPhoneNumberCredential",
-                        hash: ["bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"]
-                    )
-                ]))
-            ]
+                SingleCredential(
+                    type: "VerifiedEmailAddressCredential",
+                    hash: ["bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi"]
+                ),
+                SingleCredential(
+                    type: "VerifiedPhoneNumberCredential",
+                    hash: ["bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"]
+                )
+            ]))
+        ]
     )
     
     // Alternative: Encoded signed request version
