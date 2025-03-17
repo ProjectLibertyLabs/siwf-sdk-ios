@@ -26,7 +26,7 @@ public struct SiwfButton: View {
     
     public var body: some View {
         Button(action: {
-            print("SIWF Button tapped. Opening authentication URL: \(authUrl.absoluteString)")
+            debugPrint("SIWF Button tapped. Opening authentication URL: \(authUrl.absoluteString)")
             self.showSafariView = true
             siwfCoordinator.safariViewActive = true
         }) {
