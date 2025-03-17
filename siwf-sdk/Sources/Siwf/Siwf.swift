@@ -42,7 +42,6 @@ public class Siwf: ObservableObject {
      * @param redirectUrl - The expected redirect URL registered by the app.
      * @param processAuthorization - A closure that handles the extracted authorization code.
      */
-
     public static func handleRedirectUrl(incomingUrl: URL, redirectUrl: URL, processAuthorization: (_ authorizationCode: String) -> Void) -> Void {
         // No active safari view? Cannot be us
         if !shared.safariViewActive {
