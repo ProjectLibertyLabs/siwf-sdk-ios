@@ -59,7 +59,7 @@ public struct SiwfButton: View {
         }
         .onAppear {
             Task {
-                print("⏳ Fetching SIWF assets...")
+                debugPrint("⏳ Fetching SIWF assets...")
                 if let remoteAssets = try? await getRemoteAssets() {
                     // If we get remote remote assets, set button styles to latest
                     buttonStyle = getButtonStyle(mode: mode, assets: remoteAssets)
