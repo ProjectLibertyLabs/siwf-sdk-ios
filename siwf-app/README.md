@@ -1,10 +1,3 @@
-//
-//  README.md
-//  SiwfApp
-//
-//  Created by Claire Olmstead on 3/17/25.
-//
-
 # **Sign-In With Frequency (SIWF) SDK For iOS**
 
 🚀 **[Sign-In With Frequency (SIWF)](https://github.com/ProjectLibertyLabs/siwf)** is an authentication SDK designed for seamless integration with mobile apps.
