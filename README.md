@@ -22,11 +22,11 @@ If you haven't already, download and install [XCode](https://apps.apple.com/us/a
 Run the following command in your terminal to clone the repository:
 ```sh
 git clone git@github.com:ProjectLibertyLabs/siwf-sdk-ios.git
-cd siwf-sdk-ios/siwf-app
+cd siwf-sdk-ios/example-app
 ```
 
 ### 3️⃣ Open the Project in XCode
-Open the `siwf-app`. You should see a package dependency titled `Siwf`. If not, add `siwf-sdk-ios/siwf-sdk` as a local dependency.
+Open the `example-app`. You should see a package dependency titled `Siwf`. If not, add `../` as a local dependency.
 
 ### 4️⃣ Run the App
 - Click **▶** in XCode to run the simulator. It may take a moment to load.
