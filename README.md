@@ -36,7 +36,7 @@ Your SIWF SDK Demo App should now be running! 🚀
 ## 📝 **Getting Started - SIWF SDK For Your App**
 
 ### ⚙️ Requirements
-iOS 15.0 or later, macOS 11.0 or later, and Swift
+iOS 15.0 or later and Swift
 
 ## 🛠 **Usage For Your App**
 When you decide to use the SIWF SDK in your own app, follow the steps below for easy integration:
