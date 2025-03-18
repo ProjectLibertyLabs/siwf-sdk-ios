@@ -68,7 +68,7 @@ public struct SiwfButton: View {
         }
         .onChange(of: siwfCoordinator.safariViewActive) { active in
             if !active && showSafariView {
-                print("❌ SafariView dismissed. Updating state.")
+                debugPrint("❌ SafariView dismissed. Updating state.")
                 showSafariView = false
             }
         }
