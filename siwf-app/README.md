@@ -42,6 +42,7 @@ iOS 15.0 or later, macOS 11.0 or later, and Swift
 When you decide to use the SIWF SDK in your own app, follow the steps below for easy integration:
 
 ### **1️⃣ Define an `authRequest`**
+<!--TODO: Define authRequest and it's purpose?-->
 - Refer to the Demo App for examples of encoded and non-encoded requests.
 - To create your own, use [Frequency's Signed Request Generator](https://projectlibertylabs.github.io/siwf/v2/docs/Generate.html).
 
@@ -55,7 +56,6 @@ Use `Siwf.createSignInButton` to create a SIWF Button in your UI:
 ```
 
 ### **3️⃣ Handle Authorization Callbacks**
-
 `OnOpenURL`, use `Siwf.handleRedirectUrl()` to listen for the deep link(`siwfdemoapp://login`) and handle the authorization callback.
 
 ```swift
