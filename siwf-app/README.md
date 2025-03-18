@@ -66,28 +66,21 @@ Use `Siwf.createSignInButton` to create a SIWF Button in your UI:
 `OnOpenURL`, use `Siwf.handleRedirectUrl()` to listen for the deep link(`siwfdemoapp://login`) and handle the authorization callback.
 
 ```swift
-    var body: some Scene {
-    WindowGroup {
-        NavigationView {
-            ContentView() //Renders the SIWF Button
-                .navigationTitle("SIWF Demo App")
+    Siwf.createSignInButton(authRequest: authRequest)
+    .onOpenURL { url in
+        guard let redirectUrl = URL(string: "siwfdemoapp://login") else {
+            print("❌ Error: Invalid redirect URL.")
+            return
         }
-        .onOpenURL { url in
-            guard let redirectUrl = URL(string: "siwfdemoapp://login") else {
-                print("❌ Error: Invalid redirect URL.")
-                return
+        Siwf.handleRedirectUrl(
+            incomingUrl: url,
+            redirectUrl: redirectUrl,
+            processAuthorization: { authorizationCode in
+                print("✅ Successfully extracted authorization code: \(authorizationCode)")
+                <!--Process the authorizationCode by sending it it your backend servers-->
+                <!--See https://projectlibertylabs.github.io/siwf/v2/docs/Actions/Response.html-->
             }
-
-            Siwf.handleRedirectUrl(
-                incomingUrl: url,
-                redirectUrl: redirectUrl,
-                processAuthorization: { code in
-                    print("✅ Successfully extracted authorization code: \(code)")
-                    authorizationCode = code
-                    showAlert = true
-                }
-            )
-        }
+        )
     }
 }
 ```
@@ -100,36 +93,4 @@ To contribute:
 
 ## 📦 **Release**
 
-Use GitHub to create a release.
-That will trigger CI to do the release and update with [jreleaser](https://jreleaser.org/guide/latest/tools/jreleaser-gradle.html).
-
-### Example Release Steps
-
-1. Set the environment variable: `RELEASE_VERSION` to `x.y.z` or `x.y.z-SNAPSHOT`
-2. Show config: `RELEASE_VERSION="1.0.0" ./gradlew siwf:jreleaserConfig --dryrun --full`
-3. Staging build `RELEASE_VERSION="1.0.0" ./gradlew siwf:publishReleasePublicationToPreDeployRepository`
-4. Dry run `RELEASE_VERSION="1.0.0" ./gradlew siwf:jreleaserFullRelease --dryrun`
-5. Full `RELEASE_VERSION="1.0.0" ./gradlew siwf:jreleaserFullRelease --dryrun`
-
-### Release Secrets
-Can be set in `/siwf/.env`
-```
-# Release Username for Maven Central / SonaType
-JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME=<replace>
-# Release Token for Maven Central / SonaType
-JRELEASER_MAVENCENTRAL_SONATYPE_TOKEN=<replace>
-
-# Release GitHub Token with Permissions
-JRELEASER_GITHUB_TOKEN=<replace>
-
-# Release Signing GPG Passphrase
-JRELEASER_GPG_PASSPHRASE=<replace>
-# Release Signing GPG Public Key (base64 encoded)
-```
-
-### GPG Signing Key Rotation
-
-1. Generate new key
-2. Export key and commit `gpg --armor --export <KEY ID> > ./siwf/signing-public-key.asc`
-3. Update GitHub Actions Secret `GPG_SECRET_KEY_BASE64` with the Secret Key `gpg --armor --export-secret-key <KEY ID> | base64 -w 0`
-4. Update the GPG Passphrase GitHub Actions Secret: `JRELEASER_GPG_PASSPHRASE`
+<!--TODO-->
