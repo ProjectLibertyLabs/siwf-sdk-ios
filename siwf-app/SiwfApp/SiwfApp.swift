@@ -31,6 +31,8 @@ struct SiwfApp: App {
                         print("✅ Successfully extracted authorization code: \(code)")
                         authorizationCode = code
                         showAlert = true
+                        // Process the authorizationCode by sending it it your backend servers
+                        // See https://projectlibertylabs.github.io/siwf/v2/docs/Actions/Response.html
                     }
                 )
             }
