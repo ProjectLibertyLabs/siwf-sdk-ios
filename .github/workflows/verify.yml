@@ -1,0 +1,64 @@
+name: Verify
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify-library:
+    name: Verify Library with Swift ${{ matrix.swift }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        swift: ["5", "6"]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        # https://github.com/swift-actions/setup-swift/releases/tag/v2.2.0
+        uses: swift-actions/setup-swift@d4537ff835c9778c934e48f78639e270edd5839e
+        with:
+          swift-version: ${{ matrix.swift }}
+
+      - name: Get swift version
+        run: swift --version
+
+      - name: Swift Package Dump
+        run: swift package dump-package
+
+      - name: Build Library
+        run: xcodebuild -scheme Siwf -destination "platform=iOS Simulator,OS=latest,name=iPhone 16"
+
+      - name: Test Library
+        run: xcodebuild test -parallel-testing-enabled YES -parallel-testing-worker-count 4 -scheme Siwf -destination "platform=iOS Simulator,OS=latest,name=iPhone 16"
+
+  verify-example-app:
+    name: Verify Example SiwfApp
+    runs-on: "macos-latest"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        # https://github.com/swift-actions/setup-swift/releases/tag/v2.2.0
+        uses: swift-actions/setup-swift@d4537ff835c9778c934e48f78639e270edd5839e
+
+      - name: Get swift version
+        run: swift --version
+
+      - name: Install Example SiwfApp Dependencies
+        working-directory: example-app
+        run: swift package resolve
+
+      - name: Build Example SiwfApp
+        working-directory: example-app
+        run: xcodebuild build -scheme "SiwfApp" -destination "generic/platform=iOS" CODE_SIGNING_ALLOWED=NO
+
+      - name: Test Example SiwfApp
+        working-directory: example-app
+        run: xcodebuild test -scheme "SiwfApp" -destination "platform=iOS Simulator,name=iPhone 16" -configuration Debug
