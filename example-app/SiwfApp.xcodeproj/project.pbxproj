@@ -46,7 +46,6 @@
 		A36F9EDD2D03BB70009A9DCD /* SiwfAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiwfAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A36F9EE12D03BB70009A9DCD /* SiwfAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiwfAppUITests.swift; sourceTree = "<group>"; };
 		A36F9EE32D03BB70009A9DCD /* SiwfAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiwfAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A3E06CA72D88D30700DC880D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +81,6 @@
 				A36F9ED62D03BB70009A9DCD /* SiwfAppTests */,
 				A36F9EE02D03BB70009A9DCD /* SiwfAppUITests */,
 				A36F9EC42D03BB6F009A9DCD /* Products */,
-				A3E06CA72D88D30700DC880D /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,7 +223,7 @@
 			);
 			mainGroup = A36F9EBA2D03BB6F009A9DCD;
 			packageReferences = (
-				A3D9B2502D765F58004BF3E1 /* XCLocalSwiftPackageReference "../siwf-sdk" */,
+				A3D9B2502D765F58004BF3E1 /* XCLocalSwiftPackageReference "../" */,
 			);
 			productRefGroup = A36F9EC42D03BB6F009A9DCD /* Products */;
 			projectDirPath = "";
@@ -598,9 +596,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A3D9B2502D765F58004BF3E1 /* XCLocalSwiftPackageReference "../siwf-sdk" */ = {
+		A3D9B2502D765F58004BF3E1 /* XCLocalSwiftPackageReference "../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../siwf-sdk";
+			relativePath = ../;
 		};
 /* End XCLocalSwiftPackageReference section */
 

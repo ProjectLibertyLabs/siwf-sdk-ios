@@ -4,6 +4,9 @@
 
 This repository contains the local SIWF SDK and Demo App, for seamless spinup and as a reference for how to use the SIWF SDK in your app.
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FProjectLibertyLabs%2Fsiwf-sdk-ios%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ProjectLibertyLabs/siwf-sdk-ios)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FProjectLibertyLabs%2Fsiwf-sdk-ios%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ProjectLibertyLabs/siwf-sdk-ios)
+
 ## 📌 **Index**
 1. 🚀 [Getting Started - SIWF SDK Demo App](#getting-started---siwf-sdk-demo-app)
 2. 📝 [Getting Started - SIWF SDK For Your App](#getting-started---siwf-sdk-for-your-app)
@@ -22,11 +25,11 @@ If you haven't already, download and install [XCode](https://apps.apple.com/us/a
 Run the following command in your terminal to clone the repository:
 ```sh
 git clone git@github.com:ProjectLibertyLabs/siwf-sdk-ios.git
-cd siwf-sdk-ios/siwf-app
+cd siwf-sdk-ios/example-app
 ```
 
 ### 3️⃣ Open the Project in XCode
-Open the `siwf-app`. You should see a package dependency titled `Siwf`. If not, add `siwf-sdk-ios/siwf-sdk` as a local dependency.
+Open the `example-app`. You should see a package dependency titled `Siwf`. If not, add `../` as a local dependency.
 
 ### 4️⃣ Run the App
 - Click **▶** in XCode to run the simulator. It may take a moment to load.
@@ -36,7 +39,7 @@ Your SIWF SDK Demo App should now be running! 🚀
 ## 📝 **Getting Started - SIWF SDK For Your App**
 
 ### ⚙️ Requirements
-iOS 15.0 or later, macOS 11.0 or later, and Swift
+iOS 15.0 or later and Swift
 
 ## 🛠 **Usage For Your App**
 When you decide to use the SIWF SDK in your own app, follow the steps below for easy integration:
@@ -44,6 +47,16 @@ When you decide to use the SIWF SDK in your own app, follow the steps below for 
 ### **1️⃣ Define the SIWF Authentication Details**
 - Refer to the Demo App for examples of encoded and non-encoded auth requests.
 - To create your own, use [Frequency's Signed Request Generator](https://projectlibertylabs.github.io/siwf/v2/docs/Generate.html).
+
+### **2️⃣ 🚀 Installation**
+
+To use this package in a SwiftPM project, you need to set it up as a package dependency:
+
+- [Xcode Instructions](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app)
+  - `https://github.com/ProjectLibertyLabs/siwf-sdk-ios.git`
+- [Swift Package Manager](https://docs.swift.org/package-manager/PackageDescription/PackageDescription.html)
+  - `.package(url: "https://github.com/ProjectLibertyLabs/siwf-sdk-ios.git", from: "<version>")`
+
 
 ### **2️⃣ Display the SIWF Sign-In Button**
 Use `Siwf.createSignInButton` to create a SIWF Button in your UI:
@@ -85,4 +98,7 @@ To contribute:
 
 ## 📦 **Release**
 
-<!--TODO-->
+Releases are managed via [GitHub Releases](https://github.com/ProjectLibertyLabs/siwf-sdk-ios/releases).
+
+[Swift Packages](https://swiftpackageindex.com/) are based on the tag generated from the release and the code at that tag.
+No artifacts beyond the code are required.

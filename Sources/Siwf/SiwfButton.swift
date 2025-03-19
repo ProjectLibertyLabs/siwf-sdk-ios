@@ -6,7 +6,6 @@ import Foundation
 /// - Parameters:
 ///   - mode: The visual style of the button (Primary, Dark, Light).
 ///   - authUrl: The authentication URL that the button triggers.
-@available(iOS 15.0, *)
 public struct SiwfButton: View {
     let mode: SiwfButtonMode
     let authUrl: URL
