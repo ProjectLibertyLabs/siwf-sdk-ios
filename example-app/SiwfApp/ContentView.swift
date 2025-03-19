@@ -47,6 +47,11 @@ struct ContentView: View {
                 )
             ]))
         ]
+//        To help users understand which application is asking them to sign in, you can providen an applicationContext object that contains the URL of an application context credential.
+
+//        applicationContext: ApplicationContextUrl(
+//            url: "https://example.org/myapp/siwf-manifest.json"
+//        )
     )
     
     // Alternative: Encoded signed request version

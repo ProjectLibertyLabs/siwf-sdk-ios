@@ -97,6 +97,14 @@ public enum SiwfRequestedCredential: Codable {
     }
 }
 
+public struct ApplicationContextUrl: Codable, Equatable {
+    public let url: String
+    
+    public init(url: String) {
+        self.url = url
+    }
+}
+
 public struct SingleCredential: Codable, Equatable {
     let type: String
     let hash: [String]
