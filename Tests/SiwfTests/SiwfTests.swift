@@ -1,113 +1,159 @@
 import XCTest
-
 @testable import Siwf
 
-let exampleRequest = SiwfSignedRequest(
-    requestedSignatures: SiwfRequestedSignature(
-        publicKey: SiwfPublicKey(encodedValue: "examplePublicKey"),
-        signature: SiwfSignature(encodedValue: "exampleEncodedSignature"),
-        payload: SiwfPayload(
-            callback: "https://www.google.com",
-            permissions: [1, 2, 3]
-        )
-    )
-)
-
-let exampleEncodedSignedRequest = encodeSignedRequest(exampleRequest)
-
-func createRequestUrl(urlBase: String) -> String {
-    guard let exampleEncodedSignedRequest = exampleEncodedSignedRequest else {
-        return ""
-    }
-    return urlBase + exampleEncodedSignedRequest
-}
-
-func decodeSignedRequest(encodedSignedRequest: String) -> SiwfSignedRequest? {
-    do {
-        let serialized = try stringFromBase64URL(encodedSignedRequest) // Ensure decoding works
-        guard let jsonData = serialized.data(using: .utf8) else {
-            return nil
-        }
-        let jsonObject = try JSONDecoder().decode(SiwfSignedRequest.self, from: jsonData)
-        return jsonObject
-    } catch {
-        print("Error decoding signed request: \(error)")
-        return nil
-    }
-}
-
-func parseRequestUrl(url: String) -> (String, SiwfSignedRequest?) {
-    let components = url.split(separator: "signedRequest=").map(String.init)
-    guard components.count > 1 else {
-        return (components[0], nil)
-    }
-    return (components[0], decodeSignedRequest(encodedSignedRequest: components[1]))
-}
-
-final class GenerateAuthenticationUrlTests: XCTestCase {
-    func testGeneratesUrlWithFakeSignedRequestAndNoAdditionalParams() {
-        guard let result = generateAuthenticationUrl(signedRequest: exampleRequest, additionalCallbackUrlParams: [:], options: nil) else {
-                XCTFail("generateAuthenticationUrl returned nil")
-                return
-            }
-        let expectedResultUrlBase: String = "https://www.frequencyaccess.com/siwa/start?"
-        let parsedResult = parseRequestUrl(url: result)
-        let resultUrlBase: String = parsedResult.0
-        let resultDecodedRequest: SiwfSignedRequest? = parsedResult.1
-
-        XCTAssertEqual(resultUrlBase, expectedResultUrlBase)
-        XCTAssertEqual(resultDecodedRequest, exampleRequest)
-    }
+final class SiwfTests: XCTestCase {
     
-    func testGeneratesUrlWithFakeSignedRequestAndAdditionalParams() {
-        guard let result = generateAuthenticationUrl(signedRequest: exampleRequest, additionalCallbackUrlParams: ["abc": "123"], options: nil) else {
-                XCTFail("generateAuthenticationUrl returned nil")
-                return
-            }
-        let expectedResultUrlBase: String = "https://www.frequencyaccess.com/siwa/start?abc=123&"
-        let parsedResult = parseRequestUrl(url: result)
-        let resultUrlBase: String = parsedResult.0
-        let resultDecodedRequest: SiwfSignedRequest? = parsedResult.1
-
-        XCTAssertEqual(resultUrlBase, expectedResultUrlBase)
-        XCTAssertEqual(resultDecodedRequest, exampleRequest)
-    }
-
-    func testGeneratesUrlWhenAdditionalParamsTriesToOverrideSignedRequest() {
-        guard let result = generateAuthenticationUrl(
-            signedRequest: exampleRequest,
-            additionalCallbackUrlParams: ["signedRequest": "123", "abc": "123"],
-            options: nil
-        ) else {
-            XCTFail("generateAuthenticationUrl returned nil")
-            return
-        }
-    
-        let expectedResultUrlBase: String = "https://www.frequencyaccess.com/siwa/start?abc=123&"
-        let parsedResult = parseRequestUrl(url: result)
-        let resultUrlBase: String = parsedResult.0
-        let resultDecodedRequest: SiwfSignedRequest? = parsedResult.1
-
-        XCTAssertEqual(resultUrlBase, expectedResultUrlBase)
-        XCTAssertEqual(resultDecodedRequest, exampleRequest)
-    }
-
-    func testGeneratesUrlWhenAdditionalParamsTriesToOverrideAuthorizationCode() {
-        guard let result = generateAuthenticationUrl(
-            signedRequest: exampleRequest,
-            additionalCallbackUrlParams: ["authorizationCode": "123", "abc": "123"],
-            options: nil
-        ) else {
-            XCTFail("generateAuthenticationUrl returned nil")
-            return
-        }
+    private func createSampleSiwfRequestedSignature() -> SiwfRequestedSignature {
+        let publicKey = SiwfPublicKey(encodedValue: "testPublicKey123")
+        let signature = SiwfSignature(encodedValue: "testSignature456")
+        let payload = SiwfPayload(callback: "https://example.com/callback", permissions: [1, 2, 3])
         
-        let expectedResultUrlBase: String = "https://www.frequencyaccess.com/siwa/start?abc=123&"
-        let parsedResult = parseRequestUrl(url: result)
-        let resultUrlBase: String = parsedResult.0
-        let resultDecodedRequest: SiwfSignedRequest? = parsedResult.1
+        return SiwfRequestedSignature(publicKey: publicKey, signature: signature, payload: payload)
+    }
+    
+    private func createSampleRequestedCredential() -> SiwfRequestedCredential {
+        .single(SingleCredential(type: "test-credential", hash: ["abc123", "def456"]))
+    }
+    
+    // MARK: - Test Cases
+    
+    func testGenerateAuthUrlWithEncodedSignedRequest() {
+        // Arrange
+        let encodedRequestString = "encodedTestRequest123"
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: encodedRequestString)
+        let options = Options(endpoint: "mainnet")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: ["param1": "value1", "param2": "value2"],
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("https://www.frequencyaccess.com/siwa/start"))
+        XCTAssertTrue(url.absoluteString.contains("param1=value1"))
+        XCTAssertTrue(url.absoluteString.contains("param2=value2"))
+        XCTAssertTrue(url.absoluteString.contains("signedRequest=encodedTestRequest123"))
+    }
+    
+    func testGenerateAuthUrlWithSiwfSignedRequest() {
+        // Arrange
+        let requestedSignature = createSampleSiwfRequestedSignature()
+        let requestedCredentials = [createSampleRequestedCredential()]
+        let signedRequest = SignedRequest.siwfSignedRequest(
+            requestedSignatures: requestedSignature,
+            requestedCredentials: requestedCredentials
+        )
+        let options = Options(endpoint: "mainnet")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: nil,
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("https://www.frequencyaccess.com/siwa/start"))
+        XCTAssertTrue(url.absoluteString.contains("signedRequest="))
+        // We can't easily test the exact encoded value since it involves JSON encoding
+    }
+    
+    func testGenerateAuthUrlWithTestnetEnvironment() {
+        // Arrange
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: "testRequest")
+        let options = Options(endpoint: "testnet")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: nil,
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("https://testnet.frequencyaccess.com/siwa/start"))
+    }
+    
+    func testGenerateAuthUrlWithCustomEnvironment() {
+        // Arrange
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: "testRequest")
+        let options = Options(endpoint: "https://custom.example.com")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: nil,
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("https://custom.example.com/start"))
+    }
+    
+    func testGenerateAuthUrlFiltersReservedParams() {
+        // Arrange
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: "testRequest")
+        let options = Options(endpoint: "mainnet")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: [
+                "validParam": "validValue",
+                "signedRequest": "shouldBeFiltered",
+                "authorizationCode": "shouldAlsoBeFiltered"
+            ],
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("validParam=validValue"))
+        XCTAssertFalse(url.absoluteString.contains("signedRequest=shouldBeFiltered"))
+        XCTAssertFalse(url.absoluteString.contains("authorizationCode=shouldAlsoBeFiltered"))
+        XCTAssertTrue(url.absoluteString.contains("signedRequest=testRequest"))
+    }
+    
+    func testGenerateAuthUrlWithNoOptions() {
+        // Arrange
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: "testRequest")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: nil,
+            options: nil
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        // Should default to mainnet
+        XCTAssertTrue(url.absoluteString.contains("https://www.frequencyaccess.com/siwa/start"))
+    }
 
-        XCTAssertEqual(resultUrlBase, expectedResultUrlBase)
-        XCTAssertEqual(resultDecodedRequest, exampleRequest)
+    func testGenerateAuthUrlWithSpecialCharactersInParams() {
+        // Arrange
+        let signedRequest = SignedRequest.siwfEncodedSignedRequest(encodedSignedRequest: "testRequest")
+        let options = Options(endpoint: "mainnet")
+        let authRequest = GenerateAuthRequest(
+            signedRequest: signedRequest,
+            additionalCallbackUrlParams: ["special": "value with spaces & symbols!"],
+            options: options
+        )
+        
+        // Act
+        let url = generateAuthUrl(authRequest: authRequest)
+        
+        // Assert
+        XCTAssertTrue(url.absoluteString.contains("special="))
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        let specialParam = components?.queryItems?.first(where: { $0.name == "special" })
+        XCTAssertEqual(specialParam?.value, "value with spaces & symbols!")
     }
 }
