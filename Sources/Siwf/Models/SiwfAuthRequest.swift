@@ -25,7 +25,11 @@ public struct GenerateAuthRequest {
  */
 public enum SignedRequest {
     case siwfEncodedSignedRequest(encodedSignedRequest: String)
-    case siwfSignedRequest(requestedSignatures: SiwfRequestedSignature, requestedCredentials: [SiwfRequestedCredential] = [])
+    case siwfSignedRequest(
+        requestedSignatures: SiwfRequestedSignature,
+        requestedCredentials: [SiwfRequestedCredential] = [],
+        applicationContext: ApplicationContextUrl? = nil
+    )
 }
 
 /**
