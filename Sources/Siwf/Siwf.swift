@@ -42,7 +42,7 @@ public class Siwf: ObservableObject {
      * @param redirectUrl - The expected redirect URL registered by the app.
      * @param processAuthorization - A closure that handles the extracted authorization code.
      */
-    public static func handleRedirectUrl(incomingUrl: URL, redirectUrl: URL, processAuthorization: (_ authorizationCode: String) -> Void) -> Void {
+    public static func handleRedirectUrl(incomingUrl: URL, redirectUrl: URL, processAuthorization: (_ authorizationCode: String, _ authorizationUri: URL) -> Void) -> Void {
         // No active safari view? Cannot be us
         if !shared.safariViewActive {
             return
@@ -57,11 +57,13 @@ public class Siwf: ObservableObject {
             return
         }
         
+        let authorizationUri: URL = incomingUrl.url!
+        
         debugPrint("Captured authorizationCode: \(authorizationCode)")
         // Trigger the closing of any button's SafariView
         shared.safariViewActive = false
         // TODO: Do we want to swap the authorizationCode for the full payload?
         // Trigger the callback
-        processAuthorization(authorizationCode)
+        processAuthorization(authorizationCode, authorizationUri)
     }
 }
