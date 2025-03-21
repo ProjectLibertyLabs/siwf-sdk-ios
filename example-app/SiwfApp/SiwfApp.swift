@@ -11,6 +11,7 @@ import Siwf
 struct SiwfApp: App {
     @State private var showAlert = false
     @State private var authorizationCode: String = ""
+    @State private var authorizationUri: String = ""
     
     var body: some Scene {
         WindowGroup {
@@ -27,9 +28,11 @@ struct SiwfApp: App {
                 Siwf.handleRedirectUrl(
                     incomingUrl: url,
                     redirectUrl: redirectUrl,
-                    processAuthorization: { code in
-                        print("✅ Successfully extracted authorization code: \(code)")
-                        authorizationCode = code
+                    processAuthorization: { incomingAuthCode, incomingAuthUri  in
+                        print("✅ Successfully extracted authorization code: \(incomingAuthCode)")
+                        print("✅ Successfully received the authorization uri: \(incomingAuthUri)")
+                        authorizationCode = incomingAuthCode
+                        authorizationUri = incomingAuthUri.absoluteString
                         showAlert = true
                         // Process the authorizationCode by sending it it your backend servers
                         // See https://projectlibertylabs.github.io/siwf/v2/docs/Actions/Response.html
@@ -39,7 +42,11 @@ struct SiwfApp: App {
             .alert("Success!", isPresented: $showAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
-                Text("Received Authorization Code: \(authorizationCode)")
+                Text("""
+                    Received Authorization Code: \(authorizationCode)
+                
+                    Received Authorization Uri: \(authorizationUri)
+                """)
             }
         }
     }

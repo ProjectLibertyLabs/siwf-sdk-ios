@@ -44,7 +44,7 @@ public struct SiwfButton: View {
             }
             .padding(.vertical, 6)
             .padding(.leading, -6)
-            .frame(width: 254)
+            .frame(width: 276)
             .background(buttonStyle.backgroundColor)
             .foregroundColor(buttonStyle.textColor)
             .overlay(
